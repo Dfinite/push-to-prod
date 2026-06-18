@@ -1,0 +1,20 @@
+# Claude Code worktrees (feat/graph-infra, feat/content-nodes)
+.claude/worktrees/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# Local env / secrets (Claude API key 등)
+.env
+.env.*
+
+# DuckDB local files (tpch)
+*.duckdb
+*.duckdb.wal
+
+# OS
+.DS_Store

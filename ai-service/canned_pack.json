@@ -1,0 +1,114 @@
+{
+  "industry": "distribution",
+  "business_questions": [
+    {
+      "id": "q1",
+      "question": "약속 납기 대비 출하가 지연될 위험이 높은 주문은?",
+      "category": "납기·리드타임",
+      "rationale": "납기 준수율 95% 목표 직결, ABC상사 클레임이 근거",
+      "linked_sources": [
+        "orders.o_orderdate",
+        "lineitem.l_commitdate",
+        "lineitem.l_shipdate"
+      ],
+      "data_status": "available"
+    },
+    {
+      "id": "q2",
+      "question": "공급사 리드타임 변동이 큰 품목은 어디인가?",
+      "category": "공급·공급사 리스크",
+      "rationale": "반복 품절 원인 추적; 물류팀 회신이 근거",
+      "linked_sources": [
+        "partsupp.ps_suppkey",
+        "supplier.s_suppkey"
+      ],
+      "data_status": "missing:공급사 리드타임"
+    }
+  ],
+  "ontology": {
+    "nodes": [
+      {
+        "id": "n_order",
+        "name": "고객주문",
+        "type": "entity",
+        "maps_from": ["orders"],
+        "answers": ["q1"]
+      },
+      {
+        "id": "n_line",
+        "name": "출하라인",
+        "type": "event",
+        "maps_from": ["lineitem"],
+        "answers": ["q1"]
+      },
+      {
+        "id": "n_supplier",
+        "name": "공급사",
+        "type": "entity",
+        "maps_from": ["supplier"],
+        "answers": ["q2"]
+      }
+    ],
+    "relations": [
+      {
+        "source": "n_order",
+        "target": "n_line",
+        "label": "주문-포함→출하라인"
+      },
+      {
+        "source": "n_supplier",
+        "target": "n_line",
+        "label": "공급사-납품→출하라인"
+      }
+    ]
+  },
+  "workflows": [
+    {
+      "id": "wf1",
+      "name": "납기 지연 조기 경보",
+      "steps": [
+        "커밋일 대비 출하 지연 라인 추출",
+        "주문 단위 위험도 집계",
+        "임계 초과 주문 경보"
+      ],
+      "answers_question": "q1",
+      "uses_nodes": ["n_order", "n_line"]
+    },
+    {
+      "id": "wf2",
+      "name": "공급사 리드타임 리스크 모니터",
+      "steps": [
+        "공급사별 리드타임 분포 산출",
+        "변동 큰 공급사 식별",
+        "연관 SKU 품절 위험 표시"
+      ],
+      "answers_question": "q2",
+      "uses_nodes": ["n_supplier", "n_line"]
+    }
+  ],
+  "demo_scenario": {
+    "narrative": "납기 지연 위험을 데이터에서 바로 짚어 경보까지 잇는 흐름",
+    "steps": [
+      "문제 입력(BRD·영업 메모)",
+      "질문셋 검토·승인",
+      "온톨로지·워크플로우 자동 생성",
+      "wf1 납기 경보 데모 실행"
+    ],
+    "based_on": "wf1"
+  },
+  "required_sources": {
+    "available": [
+      "orders.o_orderdate",
+      "lineitem.l_commitdate",
+      "lineitem.l_shipdate",
+      "supplier.s_suppkey",
+      "partsupp.ps_suppkey"
+    ],
+    "needed": [
+      "공급사 리드타임 (TPC-H 미보유 → 별도 소스 확보 필요)"
+    ]
+  },
+  "export": {
+    "markdown": "# PoC 셋업 체크리스트\n## 비즈니스 질문\n- [q1] 약속 납기 대비 출하 지연 위험 주문\n- [q2] 공급사 리드타임 변동 큰 품목 (데이터 확보 필요)\n## 온톨로지\n- 고객주문(orders), 출하라인(lineitem), 공급사(supplier)\n## 워크플로우\n- wf1 납기 지연 조기 경보 (q1)\n- wf2 공급사 리드타임 리스크 모니터 (q2)\n## 필요 데이터\n- 확보됨: orders, lineitem, supplier, partsupp\n- 확보 필요: 공급사 리드타임\n## 데모\n- wf1 기반 납기 경보 시연"
+  }
+}
