@@ -170,3 +170,29 @@ ONTOLOGY_TOOL: Dict[str, Any] = {
         "required": ["nodes", "relations"],
     },
 }
+
+# retrieve.infer_expected (A2/S2) — problem_profile 에서 분석에 필요한 엔티티/필드 추론.
+EXPECTED_TOOL: Dict[str, Any] = {
+    "name": "emit_expected",
+    "description": "문제 프로파일에서 분석에 필요한 엔티티와 각 엔티티에 필요한 필드를 추론한다. "
+                   "근거 없는 엔티티는 만들지 말 것. needed_fields 는 도메인 표현 그대로(한/영 무관). "
+                   "from 은 근거가 된 문서 title(problem_profile.sources 에 실재하는 것만).",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "entities": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "name": {"type": "string"},
+                        "needed_fields": _STR_ARRAY,
+                        "from": _STR_ARRAY,
+                    },
+                    "required": ["name", "needed_fields", "from"],
+                },
+            }
+        },
+        "required": ["entities"],
+    },
+}
