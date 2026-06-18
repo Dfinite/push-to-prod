@@ -38,6 +38,12 @@ from schemas import (
     ReviewState,
 )
 
+# S2/S3 노드 모듈 — fk_skeleton + LLM 토글 + validate (모두 D-11 준수, llm.py re-export 또는 inline TOOL)
+from nodes.ontology import gen_ontology
+from nodes.workflows import gen_workflows
+from nodes.demo import gen_demo
+from nodes.export import assemble_export
+
 _CANNED_PATH = Path(__file__).parent / "canned_pack.json"
 _CANNED: Dict[str, Any] = json.loads(_CANNED_PATH.read_text(encoding="utf-8"))
 
@@ -207,12 +213,7 @@ def review_questions(state: DomainPackState) -> Dict[str, Any]:
     return {"review_questions": review_out}
 
 
-def gen_ontology(state: DomainPackState) -> Dict[str, Any]:
-    # S2 에서 fk_skeleton + Claude tool-calling + validate 로 교체.
-    return {
-        "ontology": _CANNED["ontology"],
-        "review_ontology": _initial_review_state(),
-    }
+# gen_ontology 는 nodes/ontology.py 에서 import (S2 머지).
 
 
 def review_ontology(state: DomainPackState) -> Dict[str, Any]:
@@ -220,14 +221,7 @@ def review_ontology(state: DomainPackState) -> Dict[str, Any]:
     return {"review_ontology": {"status": "approved", "feedback": [], "attempts": 0}}
 
 
-def gen_workflows(state: DomainPackState) -> Dict[str, Any]:
-    # S3 에서 tool-calling + 참조 검증으로 교체.
-    return {"workflows": _CANNED["workflows"]}
-
-
-def gen_demo(state: DomainPackState) -> Dict[str, Any]:
-    # S3 에서 pick_top + Claude 로 교체.
-    return {"demo_scenario": _CANNED["demo_scenario"]}
+# gen_workflows / gen_demo 는 nodes/{workflows,demo}.py 에서 import (S3 머지).
 
 
 def review_final(state: DomainPackState) -> Dict[str, Any]:
@@ -235,12 +229,7 @@ def review_final(state: DomainPackState) -> Dict[str, Any]:
     return {"review_final": {"status": "approved", "feedback": [], "attempts": 0}}
 
 
-def assemble_export(state: DomainPackState) -> Dict[str, Any]:
-    # S3 에서 required_sources 계산 + markdown 렌더로 교체.
-    return {
-        "required_sources": _CANNED["required_sources"],
-        "export": _CANNED["export"],
-    }
+# assemble_export 는 nodes/export.py 에서 import (S3 머지).
 
 
 # ---------------------------------------------------------------------------

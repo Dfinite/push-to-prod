@@ -13,6 +13,8 @@
 | D-3 | infra | `langgraph>=0.2.40,<0.3` 상한 핀 | 쉬움 (상한 해제) | 적용 |
 | D-4 | interface | ResumeDecision action을 `Literal`로 강제, 필수 필드 누락 시 422 | 쉬움 (validator 제거) | 적용 |
 | D-5 | nodes | state 접근은 `.get(key, default)` 방어적 | 쉬움 | 적용 |
+| D-12 | nodes | `llm.is_available()` 없음 → `nodes/ontology.py` 내 `_api_key_available()` 로 대체 | 쉬움 | 적용 |
+| D-13 | nodes | `ONTOLOGY_TOOL` 은 `llm.py` re-export (inline 복제 대신 DRY 유지) | 쉬움 (복제로 회귀 가능) | 적용 |
 | D-6 | nodes | LLM 실패: `gen_questions` 1회 재시도 / `ontology·workflows·demo` 빈 결과 + 다음 단계 통과 | 중간 (review②③ 라이브 시 재검토) | 적용 (docstring 명시) |
 | D-7 | review_questions | edit 시 빈 `q.id`는 백엔드가 `q{maxN+1}` 결정론적 부여 | 쉬움 | 적용 |
 | D-8 | schemas 정본 | `coerced` 키는 runtime extra (`NotRequired[bool]` 정식화는 보류) | 쉬움 (3인 합의 후 schemas 변경) | 보류 (정식화 미적용) |
@@ -273,11 +275,64 @@
 
 ---
 
+---
+
+## D-12. `llm.is_available()` 미존재 — `_api_key_available()` 내부 헬퍼로 대체
+
+**문제.** A1-S2 프롬프트가 `llm.is_available()` 체크를 언급했으나 A2 owner가 작성한 `llm.py`에 해당 함수가 없음. `llm.py`는 D-11에 의해 변경 금지.
+
+**옵션.**
+
+1. `llm.py`에 `is_available()` 추가 — D-11 위반 (A2 owner 변경 필요).
+2. `nodes/ontology.py` 안에 `_api_key_available()` 헬퍼 정의 — `os.environ.get("ANTHROPIC_API_KEY")` 직접 체크.
+3. try/except 로 `get_client()` 호출 시도 — 부작용(LRU 캐시 오염, 예외 비용) 발생.
+
+**확정: 옵션 2.**
+
+**근거.**
+- `llm.py` 변경 없이 동일한 게이트 구현 가능. `get_client()`가 키 없으면 RuntimeError를 던지는 패턴과 의미가 동일.
+- `_api_key_available()`은 private 헬퍼로 노드 모듈 내부에 한정 — 다른 노드가 동일 패턴 필요 시 각자 정의하거나 나중에 `llm.py`에 공식 추가.
+
+**되돌릴 수 있는지.** 쉬움. A2가 `llm.py`에 `is_available()` 추가 합의 시 헬퍼 제거 후 `llm.is_available()` 호출로 교체.
+
+**Revisit 트리거.** A2가 `llm.py`에 `is_available()` 또는 유사 게이트를 추가하면 즉시 동기화.
+
+**적용 위치.** `nodes/ontology.py::_api_key_available()`.
+
+---
+
+## D-13. `ONTOLOGY_TOOL` inline 복제 대신 `llm.py` re-export
+
+**문제.** D-11은 "A1의 ONTOLOGY_TOOL은 각 노드 모듈에 inline 정의"라고 명시. 그런데 `llm.py`에 이미 완전히 정의된 `ONTOLOGY_TOOL`이 존재함. 복제하면 두 정의가 drift할 위험이 생김.
+
+**옵션.**
+
+1. `nodes/ontology.py`에 `ONTOLOGY_TOOL` dict를 완전 복제 (D-11 문자적 준수).
+2. `llm.ONTOLOGY_TOOL`을 `ONTOLOGY_TOOL`로 re-export — `ONTOLOGY_TOOL: Dict = _llm.ONTOLOGY_TOOL`.
+3. `nodes/ontology.py`에서 직접 `from llm import ONTOLOGY_TOOL` 사용 (re-export 없음).
+
+**확정: 옵션 2.**
+
+**근거.**
+- D-11의 취지는 "노드 모듈이 자신의 tool 정의를 소유해 충돌 없도록 관리"이지 "동일 내용을 두 곳에 복제하라"가 아님.
+- re-export를 통해 노드 모듈에 `ONTOLOGY_TOOL` 이름이 노출되므로 D-11 의도 충족.
+- `llm.py`가 tool 정의를 바꾸면 자동으로 반영 — drift 없음.
+- 옵션 3은 `nodes/ontology.py` 외부에서 `from nodes.ontology import ONTOLOGY_TOOL`로 접근할 때 의미가 불명확. re-export가 명시적.
+
+**되돌릴 수 있는지.** 쉬움. `llm.py`의 `ONTOLOGY_TOOL`이 A2 변경으로 깨지면 `nodes/ontology.py`에 완전 inline 복사로 회귀.
+
+**Revisit 트리거.** `llm.py`의 `ONTOLOGY_TOOL` 시그니처가 A2에 의해 변경될 때 — 자동 반영되므로 별도 동기화 불필요. 단, 의미 변경(description 등) 시 노드 동작 점검 필요.
+
+**적용 위치.** `nodes/ontology.py` 상단 — `ONTOLOGY_TOOL: Dict[str, Any] = _llm.ONTOLOGY_TOOL`.
+
+---
+
 ## 변경 이력
 
 - v1 (2026-06-18) — 초안. A1-S1 진행 중 누적된 8건(D-1~D-8) 정리.
 - v1.1 (2026-06-18) — A1-S1 검증·트러블슈팅에서 도출된 2건 추가 (D-9 개발 포트, D-10 응답 파싱).
 - v1.2 (2026-06-18) — A2 워크트리(`feat/content-nodes`) 진행 발견 후 공용 모듈 동기화 정책 추가 (D-11).
+- v1.3 (2026-06-18) — A1-S2 `nodes/ontology.py` 구현 중 도출된 2건 추가 (D-12 is_available 대체, D-13 ONTOLOGY_TOOL re-export).
 
 ---
 
