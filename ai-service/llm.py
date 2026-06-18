@@ -170,3 +170,48 @@ ONTOLOGY_TOOL: Dict[str, Any] = {
         "required": ["nodes", "relations"],
     },
 }
+
+# retrieve.infer_expected (A2/S2) — problem_profile 에서 분석에 필요한 엔티티/필드 추론
+# + 제공된 레퍼런스 스키마의 실제 컬럼에 매핑(reference-aware). gap 은 이 매핑을 검증·조립.
+EXPECTED_TOOL: Dict[str, Any] = {
+    "name": "emit_expected",
+    "description": "문제 프로파일에서 분석에 필요한 엔티티와 각 엔티티에 필요한 필드를 추론하고, "
+                   "각 필드를 제공된 레퍼런스 스키마의 실제 컬럼에 매핑한다. "
+                   "근거 없는 엔티티는 만들지 말 것. needed_fields 는 도메인 표현 그대로(한/영 무관). "
+                   "from 은 근거가 된 문서 title(problem_profile.sources 에 실재하는 것만). "
+                   "mapped_fields 에는 레퍼런스에 대응 컬럼이 실제로 존재하는 필드만 넣고, "
+                   "column 은 제공된 스키마의 정확한 'table.column' 만 사용한다(없으면 넣지 말 것 → gap 으로 처리).",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "entities": {
+                "type": "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "name": {"type": "string"},
+                        "needed_fields": _STR_ARRAY,
+                        "from": _STR_ARRAY,
+                        "mapped_fields": {
+                            "type": "array",
+                            "description": "needed_field 중 레퍼런스 실컬럼에 대응되는 것만.",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "field": {"type": "string"},
+                                    "column": {
+                                        "type": "string",
+                                        "description": "제공된 스키마의 정확한 'table.column'.",
+                                    },
+                                },
+                                "required": ["field", "column"],
+                            },
+                        },
+                    },
+                    "required": ["name", "needed_fields", "from", "mapped_fields"],
+                },
+            }
+        },
+        "required": ["entities"],
+    },
+}
