@@ -1,0 +1,82 @@
+{
+  "problem_profile": {
+    "goals": [
+      {
+        "text": "유통기한 임박 폐기 손실 최소화",
+        "sources": [
+          "FoodCo 재고 운영 BRD"
+        ]
+      },
+      {
+        "text": "자재 품절(소진) 사전 방지율 향상",
+        "sources": [
+          "FoodCo 재고 운영 BRD"
+        ]
+      },
+      {
+        "text": "플랜트·센터 간 재고 재배치 최적화",
+        "sources": [
+          "물류 회의록"
+        ]
+      }
+    ],
+    "pain_points": [
+      {
+        "text": "특정 자재 유통기한 임박으로 폐기 발생",
+        "sources": [
+          "재고 점검 메모"
+        ]
+      },
+      {
+        "text": "일부 플랜트에서 반복적 품절",
+        "sources": [
+          "점포운영팀 메일"
+        ]
+      },
+      {
+        "text": "플랜트 간 재고 편중(과잉·부족 동시)",
+        "sources": [
+          "물류 회의록"
+        ]
+      }
+    ],
+    "kpis": [
+      {
+        "text": "폐기율",
+        "sources": [
+          "FoodCo 재고 운영 BRD"
+        ]
+      },
+      {
+        "text": "품절률",
+        "sources": [
+          "FoodCo 재고 운영 BRD"
+        ]
+      },
+      {
+        "text": "재고 회전율",
+        "sources": [
+          "FoodCo 재고 운영 BRD"
+        ]
+      }
+    ],
+    "constraints": [
+      {
+        "text": "데모 PoC 4주",
+        "sources": [
+          "FoodCo 재고 운영 BRD"
+        ]
+      }
+    ],
+    "systems": [
+      "SAP ERP",
+      "WMS"
+    ],
+    "stakeholders": [
+      "구매팀",
+      "물류팀",
+      "점포운영팀"
+    ]
+  },
+  "problem": "유통기한 임박 폐기·품절 동시 발생, 플랜트 간 재고 편중"
+}
