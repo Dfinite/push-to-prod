@@ -1,0 +1,21 @@
+{
+  "business_questions": [
+    {
+      "id": "q1",
+      "question": "약속 납기 대비 출하가 지연될 위험이 높은 주문은?",
+      "category": "납기·리드타임",
+      "rationale": "납기 준수율 95% 목표 직결, ABC상사 클레임이 근거",
+      "linked_sources": ["orders.o_orderdate", "lineitem.l_commitdate", "lineitem.l_shipdate"],
+      "data_status": "available"
+    },
+    {
+      "id": "q2",
+      "question": "공급사 리드타임 변동이 큰 품목은 어디인가?",
+      "category": "공급·공급사 리스크",
+      "rationale": "반복 품절 원인 추적; 물류팀 회신이 근거",
+      "linked_sources": ["partsupp.ps_suppkey", "supplier.s_suppkey"],
+      "data_status": "missing:공급사 리드타임"
+    }
+  ],
+  "review_questions": {"status": "pending", "feedback": [], "attempts": 0}
+}

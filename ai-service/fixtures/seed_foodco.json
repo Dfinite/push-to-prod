@@ -1,0 +1,1923 @@
+{
+  "reference": {
+    "name": "demo_foodco_stock",
+    "schema": [
+      {
+        "table": "agg_by_chain_daily",
+        "columns": [
+          {
+            "name": "id",
+            "type": "bigint"
+          },
+          {
+            "name": "actual_shipment_date",
+            "type": "date"
+          },
+          {
+            "name": "source_plant_code",
+            "type": "character varying"
+          },
+          {
+            "name": "material_code",
+            "type": "character varying"
+          },
+          {
+            "name": "transaction_type",
+            "type": "character varying"
+          },
+          {
+            "name": "sales_customer_code",
+            "type": "character varying"
+          },
+          {
+            "name": "sales_customer_name",
+            "type": "character varying"
+          },
+          {
+            "name": "total_shipped_qty",
+            "type": "numeric"
+          },
+          {
+            "name": "transaction_count",
+            "type": "integer"
+          },
+          {
+            "name": "src_file_name",
+            "type": "character varying"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp without time zone"
+          }
+        ],
+        "pk": [
+          "id"
+        ],
+        "fk": []
+      },
+      {
+        "table": "agg_movement_daily",
+        "columns": [
+          {
+            "name": "id",
+            "type": "bigint"
+          },
+          {
+            "name": "actual_shipment_date",
+            "type": "date"
+          },
+          {
+            "name": "source_plant_code",
+            "type": "character varying"
+          },
+          {
+            "name": "destination_plant_code",
+            "type": "character varying"
+          },
+          {
+            "name": "material_code",
+            "type": "character varying"
+          },
+          {
+            "name": "material_desc",
+            "type": "character varying"
+          },
+          {
+            "name": "transaction_type",
+            "type": "character varying"
+          },
+          {
+            "name": "item_name",
+            "type": "character varying"
+          },
+          {
+            "name": "unit_of_measure",
+            "type": "character varying"
+          },
+          {
+            "name": "total_order_qty",
+            "type": "numeric"
+          },
+          {
+            "name": "total_shipped_qty",
+            "type": "numeric"
+          },
+          {
+            "name": "transaction_count",
+            "type": "integer"
+          },
+          {
+            "name": "src_file_name",
+            "type": "character varying"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp without time zone"
+          }
+        ],
+        "pk": [
+          "id"
+        ],
+        "fk": []
+      },
+      {
+        "table": "dim_chain",
+        "columns": [
+          {
+            "name": "chain_code",
+            "type": "character varying"
+          },
+          {
+            "name": "chain_name",
+            "type": "character varying"
+          },
+          {
+            "name": "chain_type",
+            "type": "character varying"
+          },
+          {
+            "name": "note",
+            "type": "text"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp without time zone"
+          }
+        ],
+        "pk": [
+          "chain_code"
+        ],
+        "fk": []
+      },
+      {
+        "table": "dim_chain_center_mapping",
+        "columns": [
+          {
+            "name": "id",
+            "type": "integer"
+          },
+          {
+            "name": "team_name",
+            "type": "character varying"
+          },
+          {
+            "name": "chain_name",
+            "type": "character varying"
+          },
+          {
+            "name": "chain_code",
+            "type": "character varying"
+          },
+          {
+            "name": "material_group_code",
+            "type": "character varying"
+          },
+          {
+            "name": "plant_code",
+            "type": "character varying"
+          },
+          {
+            "name": "ratio",
+            "type": "numeric"
+          },
+          {
+            "name": "note",
+            "type": "text"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp without time zone"
+          }
+        ],
+        "pk": [
+          "id"
+        ],
+        "fk": []
+      },
+      {
+        "table": "dim_material",
+        "columns": [
+          {
+            "name": "material_code",
+            "type": "character varying"
+          },
+          {
+            "name": "material_type_code",
+            "type": "character varying"
+          },
+          {
+            "name": "material_type_name",
+            "type": "character varying"
+          },
+          {
+            "name": "material_group_code",
+            "type": "character varying"
+          },
+          {
+            "name": "base_uom_code",
+            "type": "character varying"
+          },
+          {
+            "name": "gross_weight",
+            "type": "numeric"
+          },
+          {
+            "name": "net_weight",
+            "type": "numeric"
+          },
+          {
+            "name": "weight_uom_code",
+            "type": "character varying"
+          },
+          {
+            "name": "volume_value",
+            "type": "numeric"
+          },
+          {
+            "name": "volume_uom_code",
+            "type": "character varying"
+          },
+          {
+            "name": "length_value",
+            "type": "numeric"
+          },
+          {
+            "name": "width_value",
+            "type": "numeric"
+          },
+          {
+            "name": "height_value",
+            "type": "numeric"
+          },
+          {
+            "name": "dimension_uom_code",
+            "type": "character varying"
+          },
+          {
+            "name": "product_hierarchy_code",
+            "type": "character varying"
+          },
+          {
+            "name": "shelf_life_value",
+            "type": "integer"
+          },
+          {
+            "name": "shelf_life_uom_code",
+            "type": "character varying"
+          },
+          {
+            "name": "brand_family",
+            "type": "character varying"
+          },
+          {
+            "name": "brand_name",
+            "type": "character varying"
+          },
+          {
+            "name": "material_desc",
+            "type": "character varying"
+          }
+        ],
+        "pk": [
+          "material_code"
+        ],
+        "fk": []
+      },
+      {
+        "table": "dim_material_exclusive",
+        "columns": [
+          {
+            "name": "material_code",
+            "type": "character varying"
+          },
+          {
+            "name": "chain_name",
+            "type": "character varying"
+          },
+          {
+            "name": "classification_method",
+            "type": "character varying"
+          },
+          {
+            "name": "confidence",
+            "type": "numeric"
+          },
+          {
+            "name": "is_exclusive",
+            "type": "boolean"
+          },
+          {
+            "name": "note",
+            "type": "text"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp without time zone"
+          },
+          {
+            "name": "chain_code",
+            "type": "character varying"
+          }
+        ],
+        "pk": [
+          "material_code"
+        ],
+        "fk": [
+          {
+            "col": "material_code",
+            "ref": "dim_material.material_code"
+          }
+        ]
+      },
+      {
+        "table": "dim_material_uom",
+        "columns": [
+          {
+            "name": "product_code",
+            "type": "character varying"
+          },
+          {
+            "name": "unit_code",
+            "type": "character varying"
+          },
+          {
+            "name": "numerator",
+            "type": "integer"
+          },
+          {
+            "name": "denominator",
+            "type": "integer"
+          },
+          {
+            "name": "conv_factor",
+            "type": "numeric"
+          }
+        ],
+        "pk": [
+          "product_code",
+          "unit_code"
+        ],
+        "fk": []
+      },
+      {
+        "table": "dim_order_type",
+        "columns": [
+          {
+            "name": "order_type_code",
+            "type": "character varying"
+          },
+          {
+            "name": "order_type_name",
+            "type": "character varying"
+          },
+          {
+            "name": "category",
+            "type": "character varying"
+          },
+          {
+            "name": "note",
+            "type": "text"
+          },
+          {
+            "name": "flow_type",
+            "type": "character varying"
+          }
+        ],
+        "pk": [
+          "order_type_code"
+        ],
+        "fk": []
+      },
+      {
+        "table": "dim_plant",
+        "columns": [
+          {
+            "name": "plant_code",
+            "type": "character varying"
+          },
+          {
+            "name": "plant_name",
+            "type": "character varying"
+          }
+        ],
+        "pk": [
+          "plant_code"
+        ],
+        "fk": []
+      },
+      {
+        "table": "dim_storage_location",
+        "columns": [
+          {
+            "name": "plant_code",
+            "type": "character varying"
+          },
+          {
+            "name": "storage_location_code",
+            "type": "character varying"
+          },
+          {
+            "name": "storage_location_name",
+            "type": "character varying"
+          }
+        ],
+        "pk": [
+          "plant_code",
+          "storage_location_code"
+        ],
+        "fk": []
+      },
+      {
+        "table": "inv_snapshot_fact",
+        "columns": [
+          {
+            "name": "snapshot_row_id",
+            "type": "bigint"
+          },
+          {
+            "name": "snapshot_date",
+            "type": "date"
+          },
+          {
+            "name": "snapshot_yyyymm",
+            "type": "character"
+          },
+          {
+            "name": "plant_code",
+            "type": "character varying"
+          },
+          {
+            "name": "storage_location_code",
+            "type": "character varying"
+          },
+          {
+            "name": "location_code",
+            "type": "character varying"
+          },
+          {
+            "name": "material_code",
+            "type": "character varying"
+          },
+          {
+            "name": "expiry_date",
+            "type": "date"
+          },
+          {
+            "name": "mfg_date",
+            "type": "date"
+          },
+          {
+            "name": "stock_status_code",
+            "type": "character varying"
+          },
+          {
+            "name": "material_name",
+            "type": "character varying"
+          },
+          {
+            "name": "internal_code",
+            "type": "character varying"
+          },
+          {
+            "name": "stock_qty",
+            "type": "numeric"
+          },
+          {
+            "name": "uom_code",
+            "type": "character varying"
+          },
+          {
+            "name": "src_file_name",
+            "type": "character varying"
+          }
+        ],
+        "pk": [
+          "snapshot_row_id"
+        ],
+        "fk": []
+      },
+      {
+        "table": "pred_forecast_daily",
+        "columns": [
+          {
+            "name": "base_date",
+            "type": "date"
+          },
+          {
+            "name": "material_code",
+            "type": "character varying"
+          },
+          {
+            "name": "source_plant_code",
+            "type": "character varying"
+          },
+          {
+            "name": "material_desc",
+            "type": "character varying"
+          },
+          {
+            "name": "stock_qty",
+            "type": "numeric"
+          },
+          {
+            "name": "avg_7d_shipped",
+            "type": "numeric"
+          },
+          {
+            "name": "avg_30d_shipped",
+            "type": "numeric"
+          },
+          {
+            "name": "avg_90d_shipped",
+            "type": "numeric"
+          },
+          {
+            "name": "trend_rate_short",
+            "type": "numeric"
+          },
+          {
+            "name": "trend_rate_long",
+            "type": "numeric"
+          },
+          {
+            "name": "predicted_daily_shipment",
+            "type": "numeric"
+          },
+          {
+            "name": "avg_30d_incoming",
+            "type": "numeric"
+          },
+          {
+            "name": "predicted_daily_incoming",
+            "type": "numeric"
+          },
+          {
+            "name": "net_daily",
+            "type": "numeric"
+          },
+          {
+            "name": "est_deplete_days",
+            "type": "integer"
+          },
+          {
+            "name": "stock_trend",
+            "type": "character varying"
+          },
+          {
+            "name": "forecast_method",
+            "type": "character varying"
+          },
+          {
+            "name": "note",
+            "type": "text"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp without time zone"
+          }
+        ],
+        "pk": [
+          "base_date",
+          "material_code",
+          "source_plant_code"
+        ],
+        "fk": []
+      },
+      {
+        "table": "pred_relocation_suggest",
+        "columns": [
+          {
+            "name": "suggest_id",
+            "type": "bigint"
+          },
+          {
+            "name": "base_date",
+            "type": "date"
+          },
+          {
+            "name": "material_code",
+            "type": "character varying"
+          },
+          {
+            "name": "material_desc",
+            "type": "character varying"
+          },
+          {
+            "name": "from_plant_code",
+            "type": "character varying"
+          },
+          {
+            "name": "to_plant_code",
+            "type": "character varying"
+          },
+          {
+            "name": "suggest_qty",
+            "type": "numeric"
+          },
+          {
+            "name": "reason",
+            "type": "text"
+          },
+          {
+            "name": "priority",
+            "type": "character varying"
+          },
+          {
+            "name": "is_exclusive",
+            "type": "boolean"
+          },
+          {
+            "name": "chain_code",
+            "type": "character varying"
+          },
+          {
+            "name": "chain_name",
+            "type": "character varying"
+          },
+          {
+            "name": "from_stock_ea",
+            "type": "numeric"
+          },
+          {
+            "name": "to_stock_ea",
+            "type": "numeric"
+          },
+          {
+            "name": "from_deplete_days",
+            "type": "integer"
+          },
+          {
+            "name": "to_deplete_days",
+            "type": "integer"
+          },
+          {
+            "name": "from_risk_level",
+            "type": "character varying"
+          },
+          {
+            "name": "to_risk_level",
+            "type": "character varying"
+          },
+          {
+            "name": "created_at",
+            "type": "timestamp without time zone"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp without time zone"
+          }
+        ],
+        "pk": [
+          "suggest_id"
+        ],
+        "fk": []
+      },
+      {
+        "table": "pred_risk_daily",
+        "columns": [
+          {
+            "name": "base_date",
+            "type": "date"
+          },
+          {
+            "name": "material_code",
+            "type": "character varying"
+          },
+          {
+            "name": "source_plant_code",
+            "type": "character varying"
+          },
+          {
+            "name": "material_desc",
+            "type": "character varying"
+          },
+          {
+            "name": "stock_qty",
+            "type": "numeric"
+          },
+          {
+            "name": "min_expiry_date",
+            "type": "date"
+          },
+          {
+            "name": "remaining_days",
+            "type": "integer"
+          },
+          {
+            "name": "remaining_rate",
+            "type": "numeric"
+          },
+          {
+            "name": "shelf_life_days",
+            "type": "integer"
+          },
+          {
+            "name": "avg_7d_shipped_qty",
+            "type": "numeric"
+          },
+          {
+            "name": "avg_30d_shipped_qty",
+            "type": "numeric"
+          },
+          {
+            "name": "predicted_daily_shipment",
+            "type": "numeric"
+          },
+          {
+            "name": "net_daily",
+            "type": "numeric"
+          },
+          {
+            "name": "est_deplete_days",
+            "type": "integer"
+          },
+          {
+            "name": "surplus_days",
+            "type": "integer"
+          },
+          {
+            "name": "trend_direction",
+            "type": "character varying"
+          },
+          {
+            "name": "trend_rate",
+            "type": "numeric"
+          },
+          {
+            "name": "risk_level",
+            "type": "character varying"
+          },
+          {
+            "name": "recommended_action",
+            "type": "character varying"
+          },
+          {
+            "name": "is_exclusive",
+            "type": "boolean"
+          },
+          {
+            "name": "chain_code",
+            "type": "character varying"
+          },
+          {
+            "name": "updated_at",
+            "type": "timestamp without time zone"
+          },
+          {
+            "name": "risk_method",
+            "type": "character varying"
+          }
+        ],
+        "pk": [
+          "base_date",
+          "material_code",
+          "source_plant_code"
+        ],
+        "fk": []
+      }
+    ],
+    "samples": {
+      "agg_by_chain_daily": [
+        {
+          "id": 1,
+          "actual_shipment_date": "2024-08-15",
+          "source_plant_code": "P006",
+          "material_code": "MAT00015616",
+          "transaction_type": "20",
+          "sales_customer_code": null,
+          "sales_customer_name": null,
+          "total_shipped_qty": 241.963,
+          "transaction_count": 2,
+          "src_file_name": "demo_generated_stock_runtime",
+          "created_at": "2026-05-14T05:12:54.524142"
+        },
+        {
+          "id": 2,
+          "actual_shipment_date": "2024-10-15",
+          "source_plant_code": "P043",
+          "material_code": "MAT00013062",
+          "transaction_type": "10",
+          "sales_customer_code": null,
+          "sales_customer_name": null,
+          "total_shipped_qty": 355.583,
+          "transaction_count": 8,
+          "src_file_name": "demo_generated_stock_runtime",
+          "created_at": "2026-05-14T05:12:54.524142"
+        },
+        {
+          "id": 3,
+          "actual_shipment_date": "2024-11-15",
+          "source_plant_code": "P043",
+          "material_code": "MAT00008917",
+          "transaction_type": "10",
+          "sales_customer_code": null,
+          "sales_customer_name": null,
+          "total_shipped_qty": 49.732,
+          "transaction_count": 2,
+          "src_file_name": "demo_generated_stock_runtime",
+          "created_at": "2026-05-14T05:12:54.524142"
+        },
+        {
+          "id": 4,
+          "actual_shipment_date": "2024-09-15",
+          "source_plant_code": "P032",
+          "material_code": "MAT00021905",
+          "transaction_type": "10",
+          "sales_customer_code": null,
+          "sales_customer_name": null,
+          "total_shipped_qty": 289.041,
+          "transaction_count": 1,
+          "src_file_name": "demo_generated_stock_runtime",
+          "created_at": "2026-05-14T05:12:54.524142"
+        },
+        {
+          "id": 5,
+          "actual_shipment_date": "2024-08-15",
+          "source_plant_code": "P043",
+          "material_code": "MAT00030120",
+          "transaction_type": "10",
+          "sales_customer_code": null,
+          "sales_customer_name": null,
+          "total_shipped_qty": 5530.395,
+          "transaction_count": 7,
+          "src_file_name": "demo_generated_stock_runtime",
+          "created_at": "2026-05-14T05:12:54.524142"
+        }
+      ],
+      "agg_movement_daily": [
+        {
+          "id": 1,
+          "actual_shipment_date": "2024-07-15",
+          "source_plant_code": "P006",
+          "destination_plant_code": null,
+          "material_code": "MAT00000548",
+          "material_desc": "다온유제품13996 160g",
+          "transaction_type": "10",
+          "item_name": null,
+          "unit_of_measure": "EA",
+          "total_order_qty": 0.0,
+          "total_shipped_qty": 10036.338,
+          "transaction_count": 44,
+          "src_file_name": "demo_generated_stock_runtime",
+          "created_at": "2026-05-14T05:12:54.524142"
+        },
+        {
+          "id": 2,
+          "actual_shipment_date": "2024-07-15",
+          "source_plant_code": "P006",
+          "destination_plant_code": null,
+          "material_code": "MAT00000548",
+          "material_desc": "다온유제품13996 160g",
+          "transaction_type": "20",
+          "item_name": null,
+          "unit_of_measure": "EA",
+          "total_order_qty": 0.0,
+          "total_shipped_qty": 162.236,
+          "transaction_count": 1,
+          "src_file_name": "demo_generated_stock_runtime",
+          "created_at": "2026-05-14T05:12:54.524142"
+        },
+        {
+          "id": 3,
+          "actual_shipment_date": "2024-07-15",
+          "source_plant_code": "P006",
+          "destination_plant_code": null,
+          "material_code": "MAT00000557",
+          "material_desc": "이든베이커리원료05230 83g",
+          "transaction_type": "10",
+          "item_name": null,
+          "unit_of_measure": "EA",
+          "total_order_qty": 0.0,
+          "total_shipped_qty": 444.725,
+          "transaction_count": 1,
+          "src_file_name": "demo_generated_stock_runtime",
+          "created_at": "2026-05-14T05:12:54.524142"
+        },
+        {
+          "id": 4,
+          "actual_shipment_date": "2024-07-15",
+          "source_plant_code": "P006",
+          "destination_plant_code": null,
+          "material_code": "MAT00000557",
+          "material_desc": "이든베이커리원료05230 83g",
+          "transaction_type": "20",
+          "item_name": null,
+          "unit_of_measure": "EA",
+          "total_order_qty": 0.0,
+          "total_shipped_qty": 25.623,
+          "transaction_count": 1,
+          "src_file_name": "demo_generated_stock_runtime",
+          "created_at": "2026-05-14T05:12:54.524142"
+        },
+        {
+          "id": 5,
+          "actual_shipment_date": "2024-07-15",
+          "source_plant_code": "P006",
+          "destination_plant_code": null,
+          "material_code": "MAT00001154",
+          "material_desc": "서우원료12390 157g",
+          "transaction_type": "10",
+          "item_name": null,
+          "unit_of_measure": "EA",
+          "total_order_qty": 0.0,
+          "total_shipped_qty": 138.844,
+          "transaction_count": 1,
+          "src_file_name": "demo_generated_stock_runtime",
+          "created_at": "2026-05-14T05:12:54.524142"
+        }
+      ],
+      "dim_chain": [
+        {
+          "chain_code": "C000000031",
+          "chain_name": "다온슈퍼016",
+          "chain_type": "CVS",
+          "note": null,
+          "created_at": "2024-01-08T00:00:00"
+        },
+        {
+          "chain_code": "C000000038",
+          "chain_name": "우담슈퍼036",
+          "chain_type": "HYPER",
+          "note": null,
+          "created_at": "2024-01-08T00:00:00"
+        },
+        {
+          "chain_code": "C000000034",
+          "chain_name": "누리프레시038",
+          "chain_type": "HYPER",
+          "note": null,
+          "created_at": "2024-01-08T00:00:00"
+        },
+        {
+          "chain_code": "C000000029",
+          "chain_name": "시온마켓035",
+          "chain_type": "ETC_SALES",
+          "note": null,
+          "created_at": "2024-01-08T00:00:00"
+        },
+        {
+          "chain_code": "C000000021",
+          "chain_name": "서우슈퍼006",
+          "chain_type": "ETC_SALES",
+          "note": null,
+          "created_at": "2024-01-08T00:00:00"
+        }
+      ],
+      "dim_chain_center_mapping": [
+        {
+          "id": 1,
+          "team_name": "우담채널0012",
+          "chain_name": "다온마켓040",
+          "chain_code": "C000000016",
+          "material_group_code": null,
+          "plant_code": "P038",
+          "ratio": 1.0,
+          "note": null,
+          "updated_at": "2024-01-04T00:00:00"
+        },
+        {
+          "id": 2,
+          "team_name": "라온채널0027",
+          "chain_name": "미담마켓005",
+          "chain_code": "C000000035",
+          "material_group_code": null,
+          "plant_code": "P038",
+          "ratio": 0.5,
+          "note": null,
+          "updated_at": "2024-01-04T00:00:00"
+        },
+        {
+          "id": 3,
+          "team_name": "라온채널0027",
+          "chain_name": "미담마켓005",
+          "chain_code": "C000000035",
+          "material_group_code": null,
+          "plant_code": "P006",
+          "ratio": 0.05,
+          "note": null,
+          "updated_at": "2024-01-04T00:00:00"
+        },
+        {
+          "id": 4,
+          "team_name": "라온채널0027",
+          "chain_name": "미담마켓005",
+          "chain_code": "C000000035",
+          "material_group_code": null,
+          "plant_code": "P017",
+          "ratio": 0.1,
+          "note": null,
+          "updated_at": "2024-01-04T00:00:00"
+        },
+        {
+          "id": 5,
+          "team_name": "라온채널0027",
+          "chain_name": "미담마켓005",
+          "chain_code": "C000000035",
+          "material_group_code": null,
+          "plant_code": "P018",
+          "ratio": 0.15,
+          "note": null,
+          "updated_at": "2024-01-04T00:00:00"
+        }
+      ],
+      "dim_material": [
+        {
+          "material_code": "MAT00042631",
+          "material_type_code": "S023",
+          "material_type_name": "해온유형0109",
+          "material_group_code": "G0012",
+          "base_uom_code": "EA",
+          "gross_weight": 0.0,
+          "net_weight": 0.0,
+          "weight_uom_code": "KG",
+          "volume_value": 0.0,
+          "volume_uom_code": null,
+          "length_value": 0.0,
+          "width_value": 0.0,
+          "height_value": 0.0,
+          "dimension_uom_code": null,
+          "product_hierarchy_code": null,
+          "shelf_life_value": 0,
+          "shelf_life_uom_code": null,
+          "brand_family": null,
+          "brand_name": null,
+          "material_desc": "우담유제품03588"
+        },
+        {
+          "material_code": "MAT00008504",
+          "material_type_code": "S023",
+          "material_type_name": "해온유형0109",
+          "material_group_code": "G0012",
+          "base_uom_code": "EA",
+          "gross_weight": 0.0,
+          "net_weight": 0.0,
+          "weight_uom_code": "KG",
+          "volume_value": 0.0,
+          "volume_uom_code": null,
+          "length_value": 0.0,
+          "width_value": 0.0,
+          "height_value": 0.0,
+          "dimension_uom_code": null,
+          "product_hierarchy_code": null,
+          "shelf_life_value": 0,
+          "shelf_life_uom_code": null,
+          "brand_family": null,
+          "brand_name": null,
+          "material_desc": "라온포장11775"
+        },
+        {
+          "material_code": "MAT00037538",
+          "material_type_code": "S023",
+          "material_type_name": "해온유형0109",
+          "material_group_code": "G0012",
+          "base_uom_code": "EA",
+          "gross_weight": 0.0,
+          "net_weight": 0.0,
+          "weight_uom_code": "KG",
+          "volume_value": 0.0,
+          "volume_uom_code": null,
+          "length_value": 0.0,
+          "width_value": 0.0,
+          "height_value": 0.0,
+          "dimension_uom_code": null,
+          "product_hierarchy_code": null,
+          "shelf_life_value": 0,
+          "shelf_life_uom_code": null,
+          "brand_family": null,
+          "brand_name": null,
+          "material_desc": "시온음료04019"
+        },
+        {
+          "material_code": "MAT00028179",
+          "material_type_code": "S023",
+          "material_type_name": "해온유형0109",
+          "material_group_code": "G0012",
+          "base_uom_code": "EA",
+          "gross_weight": 0.0,
+          "net_weight": 0.0,
+          "weight_uom_code": "KG",
+          "volume_value": 0.0,
+          "volume_uom_code": null,
+          "length_value": 0.0,
+          "width_value": 0.0,
+          "height_value": 0.0,
+          "dimension_uom_code": null,
+          "product_hierarchy_code": null,
+          "shelf_life_value": 0,
+          "shelf_life_uom_code": null,
+          "brand_family": null,
+          "brand_name": null,
+          "material_desc": "라온포장02991"
+        },
+        {
+          "material_code": "MAT00017629",
+          "material_type_code": "S023",
+          "material_type_name": "해온유형0109",
+          "material_group_code": "G0012",
+          "base_uom_code": "EA",
+          "gross_weight": 0.0,
+          "net_weight": 0.0,
+          "weight_uom_code": "KG",
+          "volume_value": 0.0,
+          "volume_uom_code": null,
+          "length_value": 0.0,
+          "width_value": 0.0,
+          "height_value": 0.0,
+          "dimension_uom_code": null,
+          "product_hierarchy_code": null,
+          "shelf_life_value": 0,
+          "shelf_life_uom_code": null,
+          "brand_family": null,
+          "brand_name": null,
+          "material_desc": "미담냉동08789"
+        }
+      ],
+      "dim_material_exclusive": [
+        {
+          "material_code": "MAT00025969",
+          "chain_name": null,
+          "classification_method": "sanitized",
+          "confidence": 0.0,
+          "is_exclusive": false,
+          "note": "not selected by demo exclusive rule",
+          "created_at": "2026-05-12T04:19:56.990811",
+          "chain_code": null
+        },
+        {
+          "material_code": "MAT00011488",
+          "chain_name": null,
+          "classification_method": "sanitized",
+          "confidence": 0.0,
+          "is_exclusive": false,
+          "note": "not selected by demo exclusive rule",
+          "created_at": "2026-05-12T04:19:56.990811",
+          "chain_code": null
+        },
+        {
+          "material_code": "MAT00020539",
+          "chain_name": null,
+          "classification_method": "sanitized",
+          "confidence": 0.0,
+          "is_exclusive": false,
+          "note": "not selected by demo exclusive rule",
+          "created_at": "2026-05-12T04:19:56.990811",
+          "chain_code": null
+        },
+        {
+          "material_code": "MAT00004610",
+          "chain_name": null,
+          "classification_method": "sanitized",
+          "confidence": 0.0,
+          "is_exclusive": false,
+          "note": "not selected by demo exclusive rule",
+          "created_at": "2026-05-12T04:19:56.990811",
+          "chain_code": null
+        },
+        {
+          "material_code": "MAT00025064",
+          "chain_name": null,
+          "classification_method": "sanitized",
+          "confidence": 0.0,
+          "is_exclusive": false,
+          "note": "not selected by demo exclusive rule",
+          "created_at": "2026-05-12T04:19:56.990811",
+          "chain_code": null
+        }
+      ],
+      "dim_material_uom": [
+        {
+          "product_code": "MAT00030139",
+          "unit_code": "G",
+          "numerator": 1,
+          "denominator": 1,
+          "conv_factor": 1.0
+        },
+        {
+          "product_code": "MAT00030139",
+          "unit_code": "BNG",
+          "numerator": 1000,
+          "denominator": 1,
+          "conv_factor": 1000.0
+        },
+        {
+          "product_code": "MAT00027716",
+          "unit_code": "G",
+          "numerator": 1,
+          "denominator": 1,
+          "conv_factor": 1.0
+        },
+        {
+          "product_code": "MAT00027716",
+          "unit_code": "BNG",
+          "numerator": 1000,
+          "denominator": 1,
+          "conv_factor": 1000.0
+        },
+        {
+          "product_code": "MAT00021137",
+          "unit_code": "G",
+          "numerator": 1,
+          "denominator": 1,
+          "conv_factor": 1.0
+        }
+      ],
+      "dim_order_type": [
+        {
+          "order_type_code": "01",
+          "order_type_name": "라온유형0051",
+          "category": null,
+          "note": null,
+          "flow_type": null
+        },
+        {
+          "order_type_code": "AA",
+          "order_type_name": "미담유형0005",
+          "category": null,
+          "note": null,
+          "flow_type": null
+        },
+        {
+          "order_type_code": "AD1",
+          "order_type_name": "라온유형0075",
+          "category": null,
+          "note": null,
+          "flow_type": null
+        },
+        {
+          "order_type_code": "AD2",
+          "order_type_name": "가온유형0236",
+          "category": null,
+          "note": null,
+          "flow_type": null
+        },
+        {
+          "order_type_code": "AD3",
+          "order_type_name": "우담유형0156",
+          "category": null,
+          "note": null,
+          "flow_type": null
+        }
+      ],
+      "dim_plant": [
+        {
+          "plant_code": "P007",
+          "plant_name": "서우물류센터030"
+        },
+        {
+          "plant_code": "P021",
+          "plant_name": "우담제조소024"
+        },
+        {
+          "plant_code": "P016",
+          "plant_name": "온담허브043"
+        },
+        {
+          "plant_code": "P014",
+          "plant_name": "해온공장049"
+        },
+        {
+          "plant_code": "P054",
+          "plant_name": "시온허브047"
+        }
+      ],
+      "dim_storage_location": [
+        {
+          "plant_code": "P007",
+          "storage_location_code": "S228",
+          "storage_location_name": "라온창고0771"
+        },
+        {
+          "plant_code": "P007",
+          "storage_location_code": "S602",
+          "storage_location_name": "누리창고0158"
+        },
+        {
+          "plant_code": "P007",
+          "storage_location_code": "S654",
+          "storage_location_name": "하람창고0909"
+        },
+        {
+          "plant_code": "P007",
+          "storage_location_code": "S751",
+          "storage_location_name": "우담창고0504"
+        },
+        {
+          "plant_code": "P021",
+          "storage_location_code": "S228",
+          "storage_location_name": "라온창고0771"
+        }
+      ],
+      "inv_snapshot_fact": [
+        {
+          "snapshot_row_id": 4778412,
+          "snapshot_date": "2022-04-09",
+          "snapshot_yyyymm": "202204",
+          "plant_code": "P030",
+          "storage_location_code": "S010",
+          "location_code": "SC38",
+          "material_code": "MAT00019974",
+          "expiry_date": "2022-03-17",
+          "mfg_date": null,
+          "stock_status_code": "10",
+          "material_name": "하람냉동02709 185ml",
+          "internal_code": null,
+          "stock_qty": 2809.938,
+          "uom_code": "EA",
+          "src_file_name": "LOAD_BATCH_202204_603412"
+        },
+        {
+          "snapshot_row_id": 4778413,
+          "snapshot_date": "2022-04-09",
+          "snapshot_yyyymm": "202204",
+          "plant_code": "P038",
+          "storage_location_code": "S363",
+          "location_code": "S2BC",
+          "material_code": "MAT00002318",
+          "expiry_date": "2022-09-27",
+          "mfg_date": null,
+          "stock_status_code": "10",
+          "material_name": "누리비스킷12074 172g",
+          "internal_code": null,
+          "stock_qty": 13.605,
+          "uom_code": "EA",
+          "src_file_name": "LOAD_BATCH_202204_603413"
+        },
+        {
+          "snapshot_row_id": 4778414,
+          "snapshot_date": "2022-04-09",
+          "snapshot_yyyymm": "202204",
+          "plant_code": "P029",
+          "storage_location_code": "S363",
+          "location_code": "S690",
+          "material_code": "MAT00005788",
+          "expiry_date": "2022-10-03",
+          "mfg_date": null,
+          "stock_status_code": "10",
+          "material_name": "우담베이커리12552 12입",
+          "internal_code": null,
+          "stock_qty": 457.134,
+          "uom_code": "EA",
+          "src_file_name": "LOAD_BATCH_202204_603414"
+        },
+        {
+          "snapshot_row_id": 4778415,
+          "snapshot_date": "2022-04-09",
+          "snapshot_yyyymm": "202204",
+          "plant_code": "P045",
+          "storage_location_code": "S006",
+          "location_code": "S981",
+          "material_code": "MAT00025652",
+          "expiry_date": "2022-05-04",
+          "mfg_date": null,
+          "stock_status_code": "10",
+          "material_name": "해온스낵07321 500ml",
+          "internal_code": null,
+          "stock_qty": 231.358,
+          "uom_code": "EA",
+          "src_file_name": "LOAD_BATCH_202204_603415"
+        },
+        {
+          "snapshot_row_id": 4778416,
+          "snapshot_date": "2022-04-09",
+          "snapshot_yyyymm": "202204",
+          "plant_code": "P045",
+          "storage_location_code": "S647",
+          "location_code": "S981",
+          "material_code": "MAT00025652",
+          "expiry_date": "2022-05-04",
+          "mfg_date": null,
+          "stock_status_code": "10",
+          "material_name": "해온스낵07321 500ml",
+          "internal_code": null,
+          "stock_qty": 231.358,
+          "uom_code": "EA",
+          "src_file_name": "LOAD_BATCH_202204_603416"
+        }
+      ],
+      "pred_forecast_daily": [
+        {
+          "base_date": "2024-12-15",
+          "material_code": "MAT00047423",
+          "source_plant_code": "P032",
+          "material_desc": "해온스낵07849 414g",
+          "stock_qty": 4528.142,
+          "avg_7d_shipped": 4528.14,
+          "avg_30d_shipped": 4533.96,
+          "avg_90d_shipped": 4422.53,
+          "trend_rate_short": -0.13,
+          "trend_rate_long": 2.52,
+          "predicted_daily_shipment": 4533.96,
+          "avg_30d_incoming": 0.0,
+          "predicted_daily_incoming": 0.0,
+          "net_daily": 4533.96,
+          "est_deplete_days": 1,
+          "stock_trend": "flat",
+          "forecast_method": "demo_rule",
+          "note": "예상 소진 여력이 부족하여 보충 필요 후보입니다. 현재재고 4528EA, 최근 30일 평균 출고 4534EA/일 기준입니다.",
+          "updated_at": "2026-05-14T05:12:54.524142"
+        },
+        {
+          "base_date": "2024-12-15",
+          "material_code": "MAT00047423",
+          "source_plant_code": "P038",
+          "material_desc": "해온스낵07849 414g",
+          "stock_qty": 6307.879,
+          "avg_7d_shipped": 6307.88,
+          "avg_30d_shipped": 6131.16,
+          "avg_90d_shipped": 6136.24,
+          "trend_rate_short": 2.88,
+          "trend_rate_long": -0.08,
+          "predicted_daily_shipment": 6131.16,
+          "avg_30d_incoming": 0.0,
+          "predicted_daily_incoming": 0.0,
+          "net_daily": 6131.16,
+          "est_deplete_days": 2,
+          "stock_trend": "flat",
+          "forecast_method": "demo_rule",
+          "note": "예상 소진 여력이 부족하여 보충 필요 후보입니다. 현재재고 6308EA, 최근 30일 평균 출고 6131EA/일 기준입니다.",
+          "updated_at": "2026-05-14T05:12:54.524142"
+        },
+        {
+          "base_date": "2024-12-15",
+          "material_code": "MAT00047423",
+          "source_plant_code": "P046",
+          "material_desc": "해온스낵07849 414g",
+          "stock_qty": 807.844,
+          "avg_7d_shipped": 807.84,
+          "avg_30d_shipped": 778.87,
+          "avg_90d_shipped": 773.64,
+          "trend_rate_short": 3.72,
+          "trend_rate_long": 0.68,
+          "predicted_daily_shipment": 778.87,
+          "avg_30d_incoming": 0.0,
+          "predicted_daily_incoming": 0.0,
+          "net_daily": 778.87,
+          "est_deplete_days": 2,
+          "stock_trend": "flat",
+          "forecast_method": "demo_rule",
+          "note": "예상 소진 여력이 부족하여 보충 필요 후보입니다. 현재재고 808EA, 최근 30일 평균 출고 779EA/일 기준입니다.",
+          "updated_at": "2026-05-14T05:12:54.524142"
+        },
+        {
+          "base_date": "2024-12-15",
+          "material_code": "MAT00047423",
+          "source_plant_code": "P048",
+          "material_desc": "해온스낵07849 414g",
+          "stock_qty": 94.984,
+          "avg_7d_shipped": 94.98,
+          "avg_30d_shipped": 89.77,
+          "avg_90d_shipped": 87.53,
+          "trend_rate_short": 5.81,
+          "trend_rate_long": 2.56,
+          "predicted_daily_shipment": 89.77,
+          "avg_30d_incoming": 0.0,
+          "predicted_daily_incoming": 0.0,
+          "net_daily": 89.77,
+          "est_deplete_days": 2,
+          "stock_trend": "flat",
+          "forecast_method": "demo_rule",
+          "note": "예상 소진 여력이 부족하여 보충 필요 후보입니다. 현재재고 95EA, 최근 30일 평균 출고 90EA/일 기준입니다.",
+          "updated_at": "2026-05-14T05:12:54.524142"
+        },
+        {
+          "base_date": "2024-12-15",
+          "material_code": "MAT00047483",
+          "source_plant_code": "P017",
+          "material_desc": "시온음료06611 47g",
+          "stock_qty": 19507.727,
+          "avg_7d_shipped": 19507.73,
+          "avg_30d_shipped": 18088.98,
+          "avg_90d_shipped": 17973.54,
+          "trend_rate_short": 7.84,
+          "trend_rate_long": 0.64,
+          "predicted_daily_shipment": 18088.98,
+          "avg_30d_incoming": 0.0,
+          "predicted_daily_incoming": 0.0,
+          "net_daily": 18088.98,
+          "est_deplete_days": 2,
+          "stock_trend": "flat",
+          "forecast_method": "demo_rule",
+          "note": "소비기한 경과 2일. 현재재고 19508EA 기준으로 폐기 또는 출고제한 검토 대상입니다.",
+          "updated_at": "2026-05-14T05:12:54.524142"
+        }
+      ],
+      "pred_relocation_suggest": [
+        {
+          "suggest_id": 1,
+          "base_date": "2024-12-15",
+          "material_code": "MAT00019678",
+          "material_desc": "라온포장12999 165g",
+          "from_plant_code": "P032",
+          "to_plant_code": "P048",
+          "suggest_qty": 27.656,
+          "reason": "예상 소진 여력 부족에 따른 보충 필요 후보",
+          "priority": "high",
+          "is_exclusive": true,
+          "chain_code": "C000000040",
+          "chain_name": "해온프레시013",
+          "from_stock_ea": 524.196,
+          "to_stock_ea": 28.925,
+          "from_deplete_days": 1,
+          "to_deplete_days": 2,
+          "from_risk_level": "medium",
+          "to_risk_level": "medium",
+          "created_at": "2026-05-14T05:12:54.524142",
+          "updated_at": "2026-05-14T05:12:54.524142"
+        },
+        {
+          "suggest_id": 2,
+          "base_date": "2024-12-15",
+          "material_code": "MAT00009329",
+          "material_desc": "시온포장04559",
+          "from_plant_code": "P043",
+          "to_plant_code": "P030",
+          "suggest_qty": 27.221,
+          "reason": "예상 소진 여력 부족에 따른 보충 필요 후보",
+          "priority": "high",
+          "is_exclusive": true,
+          "chain_code": "C000000040",
+          "chain_name": "해온프레시013",
+          "from_stock_ea": 374.032,
+          "to_stock_ea": 170.386,
+          "from_deplete_days": 2,
+          "to_deplete_days": 2,
+          "from_risk_level": "normal",
+          "to_risk_level": "critical",
+          "created_at": "2026-05-14T05:12:54.524142",
+          "updated_at": "2026-05-14T05:12:54.524142"
+        },
+        {
+          "suggest_id": 3,
+          "base_date": "2024-12-15",
+          "material_code": "MAT00008393",
+          "material_desc": "서우원료05958 15L",
+          "from_plant_code": "P011",
+          "to_plant_code": "P030",
+          "suggest_qty": 284.548,
+          "reason": "예상 소진 여력 부족에 따른 보충 필요 후보",
+          "priority": "high",
+          "is_exclusive": true,
+          "chain_code": "C000000040",
+          "chain_name": "해온프레시013",
+          "from_stock_ea": 4956.501,
+          "to_stock_ea": 734.463,
+          "from_deplete_days": 1,
+          "to_deplete_days": 1,
+          "from_risk_level": "normal",
+          "to_risk_level": "normal",
+          "created_at": "2026-05-14T05:12:54.524142",
+          "updated_at": "2026-05-14T05:12:54.524142"
+        },
+        {
+          "suggest_id": 4,
+          "base_date": "2024-12-15",
+          "material_code": "MAT00002823",
+          "material_desc": "해온냉동10429 105g",
+          "from_plant_code": "P022",
+          "to_plant_code": "P048",
+          "suggest_qty": 153.452,
+          "reason": "예상 소진 여력 부족에 따른 보충 필요 후보",
+          "priority": "high",
+          "is_exclusive": true,
+          "chain_code": "C000000040",
+          "chain_name": "해온프레시013",
+          "from_stock_ea": 2956.433,
+          "to_stock_ea": 112.603,
+          "from_deplete_days": 2,
+          "to_deplete_days": 1,
+          "from_risk_level": "normal",
+          "to_risk_level": "normal",
+          "created_at": "2026-05-14T05:12:54.524142",
+          "updated_at": "2026-05-14T05:12:54.524142"
+        },
+        {
+          "suggest_id": 10,
+          "base_date": "2024-12-15",
+          "material_code": "MAT00018177",
+          "material_desc": "가온유제품02228 2l",
+          "from_plant_code": "P017",
+          "to_plant_code": "P048",
+          "suggest_qty": 178.312,
+          "reason": "예상 소진 여력 부족에 따른 보충 필요 후보",
+          "priority": "high",
+          "is_exclusive": true,
+          "chain_code": "C000000010",
+          "chain_name": "라온마트027",
+          "from_stock_ea": 3326.144,
+          "to_stock_ea": 240.092,
+          "from_deplete_days": 2,
+          "to_deplete_days": 2,
+          "from_risk_level": "normal",
+          "to_risk_level": "normal",
+          "created_at": "2026-05-14T05:12:54.524142",
+          "updated_at": "2026-05-14T05:12:54.524142"
+        }
+      ],
+      "pred_risk_daily": [
+        {
+          "base_date": "2024-12-15",
+          "material_code": "MAT00000113",
+          "source_plant_code": "P018",
+          "material_desc": "시온음료05267 32g",
+          "stock_qty": 69329.382,
+          "min_expiry_date": "2025-10-01",
+          "remaining_days": 290,
+          "remaining_rate": 80.6,
+          "shelf_life_days": 360,
+          "avg_7d_shipped_qty": 296.28,
+          "avg_30d_shipped_qty": 296.28,
+          "predicted_daily_shipment": 296.28,
+          "net_daily": 296.28,
+          "est_deplete_days": 234,
+          "surplus_days": -56,
+          "trend_direction": "flat",
+          "trend_rate": 2.81,
+          "risk_level": "normal",
+          "recommended_action": "monitor",
+          "is_exclusive": false,
+          "chain_code": null,
+          "updated_at": "2026-05-14T05:12:54.524142",
+          "risk_method": "demo_rule"
+        },
+        {
+          "base_date": "2024-12-15",
+          "material_code": "MAT00000127",
+          "source_plant_code": "P043",
+          "material_desc": "미담냉동02645",
+          "stock_qty": 306.358,
+          "min_expiry_date": "2025-05-23",
+          "remaining_days": 159,
+          "remaining_rate": 88.3,
+          "shelf_life_days": 180,
+          "avg_7d_shipped_qty": 306.36,
+          "avg_30d_shipped_qty": 314.63,
+          "predicted_daily_shipment": 314.63,
+          "net_daily": 314.63,
+          "est_deplete_days": 1,
+          "surplus_days": -158,
+          "trend_direction": "flat",
+          "trend_rate": -2.63,
+          "risk_level": "normal",
+          "recommended_action": "monitor",
+          "is_exclusive": false,
+          "chain_code": null,
+          "updated_at": "2026-05-14T05:12:54.524142",
+          "risk_method": "demo_rule"
+        },
+        {
+          "base_date": "2024-12-15",
+          "material_code": "MAT00000156",
+          "source_plant_code": "P011",
+          "material_desc": "우담유제품00732 1L",
+          "stock_qty": 7346.057,
+          "min_expiry_date": "2025-02-20",
+          "remaining_days": 67,
+          "remaining_rate": 24.8,
+          "shelf_life_days": 270,
+          "avg_7d_shipped_qty": 7346.06,
+          "avg_30d_shipped_qty": 7248.98,
+          "predicted_daily_shipment": 7248.98,
+          "net_daily": 7248.98,
+          "est_deplete_days": 2,
+          "surplus_days": -65,
+          "trend_direction": "flat",
+          "trend_rate": 1.34,
+          "risk_level": "critical",
+          "recommended_action": "discount",
+          "is_exclusive": false,
+          "chain_code": null,
+          "updated_at": "2026-05-14T05:12:54.524142",
+          "risk_method": "demo_rule"
+        },
+        {
+          "base_date": "2024-12-15",
+          "material_code": "MAT00000156",
+          "source_plant_code": "P018",
+          "material_desc": "우담유제품00732 1L",
+          "stock_qty": 25.051,
+          "min_expiry_date": "2024-11-21",
+          "remaining_days": -24,
+          "remaining_rate": -8.9,
+          "shelf_life_days": 270,
+          "avg_7d_shipped_qty": 25.05,
+          "avg_30d_shipped_qty": 25.46,
+          "predicted_daily_shipment": 25.46,
+          "net_daily": 25.46,
+          "est_deplete_days": 1,
+          "surplus_days": 25,
+          "trend_direction": "flat",
+          "trend_rate": -1.6,
+          "risk_level": "expired",
+          "recommended_action": "dispose",
+          "is_exclusive": false,
+          "chain_code": null,
+          "updated_at": "2026-05-14T05:12:54.524142",
+          "risk_method": "demo_rule"
+        },
+        {
+          "base_date": "2024-12-15",
+          "material_code": "MAT00000156",
+          "source_plant_code": "P022",
+          "material_desc": "우담유제품00732 1L",
+          "stock_qty": 72.551,
+          "min_expiry_date": "2025-02-20",
+          "remaining_days": 67,
+          "remaining_rate": 24.8,
+          "shelf_life_days": 270,
+          "avg_7d_shipped_qty": 72.55,
+          "avg_30d_shipped_qty": 72.69,
+          "predicted_daily_shipment": 72.69,
+          "net_daily": 72.69,
+          "est_deplete_days": 1,
+          "surplus_days": -66,
+          "trend_direction": "flat",
+          "trend_rate": -0.19,
+          "risk_level": "critical",
+          "recommended_action": "discount",
+          "is_exclusive": false,
+          "chain_code": null,
+          "updated_at": "2026-05-14T05:12:54.524142",
+          "risk_method": "demo_rule"
+        }
+      ]
+    },
+    "profile": {
+      "agg_by_chain_daily": {
+        "rows": 32856,
+        "actual_shipment_date": {
+          "min": "2024-07-15",
+          "max": "2024-12-15"
+        },
+        "created_at": {
+          "min": "2026-05-14 05:12:54.524142",
+          "max": "2026-05-14 05:12:54.524142"
+        }
+      },
+      "agg_movement_daily": {
+        "rows": 32856,
+        "actual_shipment_date": {
+          "min": "2024-07-15",
+          "max": "2024-12-15"
+        },
+        "created_at": {
+          "min": "2026-05-14 05:12:54.524142",
+          "max": "2026-05-14 05:12:54.524142"
+        }
+      },
+      "dim_chain": {
+        "rows": 40,
+        "created_at": {
+          "min": "2024-01-03 00:00:00",
+          "max": "2024-01-08 00:00:00"
+        }
+      },
+      "dim_chain_center_mapping": {
+        "rows": 104,
+        "updated_at": {
+          "min": "2024-01-04 00:00:00",
+          "max": "2024-01-04 00:00:00"
+        }
+      },
+      "dim_material": {
+        "rows": 18506
+      },
+      "dim_material_exclusive": {
+        "rows": 18506,
+        "created_at": {
+          "min": "2026-05-12 04:19:56.990811",
+          "max": "2026-05-12 04:19:56.990811"
+        }
+      },
+      "dim_material_uom": {
+        "rows": 85824
+      },
+      "dim_order_type": {
+        "rows": 282
+      },
+      "dim_plant": {
+        "rows": 52
+      },
+      "dim_storage_location": {
+        "rows": 1280
+      },
+      "inv_snapshot_fact": {
+        "rows": 47078888,
+        "snapshot_date": {
+          "min": "2022-01-03",
+          "max": "2024-12-15"
+        },
+        "expiry_date": {
+          "min": "2003-06-02",
+          "max": "2068-07-06"
+        },
+        "mfg_date": {
+          "min": "0023-06-12",
+          "max": "2024-04-15"
+        }
+      },
+      "pred_forecast_daily": {
+        "rows": 3948,
+        "base_date": {
+          "min": "2024-12-15",
+          "max": "2024-12-15"
+        },
+        "updated_at": {
+          "min": "2026-05-14 05:12:54.524142",
+          "max": "2026-05-14 05:12:54.524142"
+        }
+      },
+      "pred_relocation_suggest": {
+        "rows": 231,
+        "base_date": {
+          "min": "2024-12-15",
+          "max": "2024-12-15"
+        },
+        "created_at": {
+          "min": "2026-05-14 05:12:54.524142",
+          "max": "2026-05-14 05:12:54.524142"
+        },
+        "updated_at": {
+          "min": "2026-05-14 05:12:54.524142",
+          "max": "2026-05-14 05:12:54.524142"
+        }
+      },
+      "pred_risk_daily": {
+        "rows": 3948,
+        "base_date": {
+          "min": "2024-12-15",
+          "max": "2024-12-15"
+        },
+        "min_expiry_date": {
+          "min": "2023-10-06",
+          "max": "2027-12-10"
+        },
+        "updated_at": {
+          "min": "2026-05-14 05:12:54.524142",
+          "max": "2026-05-14 05:12:54.524142"
+        }
+      }
+    }
+  },
+  "expected": {
+    "entities": [
+      {
+        "name": "재고 스냅샷",
+        "needed_fields": [
+          "재고수량",
+          "유통기한"
+        ],
+        "from": [
+          "재고 점검 메모"
+        ]
+      },
+      {
+        "name": "출하·이동",
+        "needed_fields": [
+          "출하일",
+          "출하수량"
+        ],
+        "from": [
+          "물류 회의록"
+        ]
+      }
+    ]
+  },
+  "gap": {
+    "matched": [
+      {
+        "expected": "재고 스냅샷",
+        "reference": "inv_snapshot_fact",
+        "via": [
+          "stock_qty",
+          "expiry_date"
+        ]
+      },
+      {
+        "expected": "출하·이동",
+        "reference": "agg_movement_daily",
+        "via": [
+          "actual_shipment_date",
+          "total_shipped_qty"
+        ]
+      }
+    ],
+    "missing": [
+      {
+        "expected": "점포 실판매(POS) 수요",
+        "note": "POS 판매 데이터 미보유 → 출하량(total_shipped_qty)으로 근사"
+      }
+    ],
+    "extra": [
+      "session_log",
+      "chat_history",
+      "etl_file_progress"
+    ]
+  },
+  "gold_questions": [
+    "유통기한 임박으로 폐기 위험이 높은 자재·플랜트는?",
+    "소진 예상일(est_deplete_days)이 짧아 품절 위험이 큰 자재는?",
+    "플랜트 간 재고 편중으로 재배치가 필요한 자재는?",
+    "최근 출하 추세가 급증/급감한 자재는?",
+    "재고 회전이 느린 부진 자재는?"
+  ]
+}

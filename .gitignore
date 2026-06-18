@@ -11,10 +11,15 @@ venv/
 # Local env / secrets (Claude API key 등)
 .env
 .env.*
+!.env.example
 
 # DuckDB local files (tpch)
 *.duckdb
 *.duckdb.wal
+
+# E2E 스모크 산출물 (실 DB 샘플 포함 — 커밋 금지)
+ai-service/out/
+ai-service/out_run.log
 
 # OS
 .DS_Store
