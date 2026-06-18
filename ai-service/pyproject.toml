@@ -1,0 +1,18 @@
+[project]
+name = "ai-service"
+version = "0.1.0"
+description = "Domain Pack Builder — ai-service (FastAPI + LangGraph)"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.34",
+    "langgraph>=0.2.60",
+    "langchain-core>=0.3",
+    "anthropic>=0.40",
+    "duckdb>=1.4",
+    "python-dotenv>=1.0",
+]
+
+[tool.uv]
+# 애플리케이션이므로 패키지로 빌드/설치하지 않고 환경+의존성만 관리한다.
+package = false
