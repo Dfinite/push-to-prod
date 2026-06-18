@@ -18,6 +18,7 @@
 | D-8 | schemas 정본 | `coerced` 키는 runtime extra (`NotRequired[bool]` 정식화는 보류) | 쉬움 (3인 합의 후 schemas 변경) | 보류 (정식화 미적용) |
 | D-9 | dev infra | 개발 머신에서는 동적 빈 포트 탐색, 운영 표준 포트는 :8000 유지 | 쉬움 | 적용 (검증 스크립트) |
 | D-10 | 검증 스크립트 | curl 응답은 파일로 직접 받고 shell 변수 경유 금지 | 쉬움 (관행) | 적용 |
+| D-11 | 병렬 워크트리 | `nodes/__init__.py` + `llm.py` 는 양 워크트리(A1/A2) 동일 내용 유지, A2 가 owner | 중간 (owner 이동 가능) | 적용 |
 
 ---
 
@@ -276,3 +277,39 @@
 
 - v1 (2026-06-18) — 초안. A1-S1 진행 중 누적된 8건(D-1~D-8) 정리.
 - v1.1 (2026-06-18) — A1-S1 검증·트러블슈팅에서 도출된 2건 추가 (D-9 개발 포트, D-10 응답 파싱).
+- v1.2 (2026-06-18) — A2 워크트리(`feat/content-nodes`) 진행 발견 후 공용 모듈 동기화 정책 추가 (D-11).
+
+---
+
+## D-11. 병렬 워크트리 공용 모듈 동기화 정책
+
+**문제.** `feat/graph-infra`(A1)와 `feat/content-nodes`(A2)가 같은 `ai-service/nodes/` 패키지와 `ai-service/llm.py`를 각자 만들고 있어 origin 통합 머지 시 충돌 거의 확실. A1-S2 진행 직전(2026-06-18) `git fetch origin feat/content-nodes`에서 A2 가 `53fb2f1 chore: nodes/ skeleton` + `c421b20 feat: shared Claude client` 를 이미 push 한 것을 확인.
+
+**옵션.**
+
+1. 각자 만들고 머지 시점에 conflict 해결.
+2. 한 쪽 베이스를 채택해 cherry-pick. 다른 쪽이 합류.
+3. 공용 모듈(`nodes/__init__.py`, `llm.py`)을 양 워크트리에 **동일 내용**으로 유지. 변경 시 한 쪽이 먼저 commit/push → 다른 쪽이 fetch+동기화.
+
+**확정: 옵션 3.**
+
+**근거.**
+- 옵션 1: 머지 시점에 충돌 → 통합 비용 큼. 해커톤 당일 사고 위험.
+- 옵션 2: cherry-pick 은 history 가 지저분. 두 브랜치가 같은 commit hash 를 안 가지므로 fetch 시 또 충돌.
+- 옵션 3: 두 워크트리가 동일 내용 → 머지 시 자동 통합(no conflict). 동기화 책임 owner 만 정하면 됨.
+
+**책임 분담.**
+- `nodes/__init__.py` 는 **빈 파일 + 편집 금지** (A2 가 `53fb2f1` 에서 결정). A1 은 따름.
+- `llm.py` 의 `call_tool` 시그니처(kwargs-only: `system/user/tool/temperature/max_tokens/model`) 는 A2 가 `c421b20` 에서 확정. A1 은 따름.
+- A2 가 `llm.py` 에 `PROFILE_TOOL` / `QUESTIONS_TOOL` 정의를 둠. **A1 의 `ONTOLOGY_TOOL` / `WORKFLOWS_TOOL` / `DEMO_TOOL` 은 각 노드 모듈(`nodes/{ontology,workflows,demo}.py`) 에 inline 정의** — `llm.py` 추가 변경 없음.
+- 의존성: `python-dotenv` 가 A2 가정. A1 은 requirements.txt 에 추가.
+
+**되돌릴 수 있는지.** 중간. owner 이동(A1 → A2 또는 반대)은 협의 가능. 한 쪽이 시그니처를 바꾸면 다른 쪽도 동기화.
+
+**Revisit 트리거.** A2 의 `llm.py` 가 호환 깨는 변경(시그니처 바뀜)을 push 하면 즉시 동기화. 또는 두 브랜치 머지 후 단일 owner 로 통합.
+
+**적용 위치.** A1 워크트리(`feat/graph-infra`)의 `ai-service/{llm.py, nodes/__init__.py}` 를 A2 베이스(`origin/feat/content-nodes`) 에 맞춤. `requirements.txt` 에 `python-dotenv>=1.0,<2` 추가.
+
+**Side effect.**
+- `app.py` / `dto.py` / `graph.py` (A1 단독 소유) 는 A2 가 변경 안 함 — 충돌 없음.
+- A2 의 `pyproject.toml + uv.lock` 은 A1 의 `requirements.txt` 와 별도 존재. 머지 시 둘 다 보존 (deduplication 은 T105 이후 정리).
