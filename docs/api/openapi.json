@@ -1,0 +1,392 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Domain Pack Builder \u2014 ai-service",
+        "version": "0.1.0-a1s1"
+    },
+    "paths": {
+        "/runs": {
+            "post": {
+                "summary": "Start Run",
+                "description": "\uadf8\ub798\ud504 \uc9c4\uc785. PackInput \ud615\ud0dc\uc758 body \ub97c \ubc1b\uc544 \uc0c8 thread \ub85c invoke.",
+                "operationId": "start_run_runs_post",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/PackInputDTO"
+                            }
+                        }
+                    },
+                    "required": true
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RunResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/runs/{run_id}/resume": {
+            "post": {
+                "summary": "Resume Run",
+                "description": "interrupt \uc5d0\uc11c \uc7ac\uac1c. body \ub294 ResumeDecision (action / edited_items / feedback).",
+                "operationId": "resume_run_runs__run_id__resume_post",
+                "parameters": [
+                    {
+                        "name": "run_id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "title": "Run Id"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ResumeDecisionDTO"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/RunResponse"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/HTTPValidationError"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/healthz": {
+            "get": {
+                "summary": "Healthz",
+                "operationId": "healthz_healthz_get",
+                "responses": {
+                    "200": {
+                        "description": "Successful Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "additionalProperties": {
+                                        "type": "string"
+                                    },
+                                    "type": "object",
+                                    "title": "Response Healthz Healthz Get"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "BusinessQuestionDTO": {
+                "properties": {
+                    "id": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Id"
+                    },
+                    "question": {
+                        "type": "string",
+                        "title": "Question"
+                    },
+                    "category": {
+                        "type": "string",
+                        "title": "Category"
+                    },
+                    "rationale": {
+                        "type": "string",
+                        "title": "Rationale",
+                        "default": ""
+                    },
+                    "linked_sources": {
+                        "items": {
+                            "type": "string"
+                        },
+                        "type": "array",
+                        "title": "Linked Sources"
+                    },
+                    "data_status": {
+                        "type": "string",
+                        "title": "Data Status",
+                        "default": "available"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "question",
+                    "category"
+                ],
+                "title": "BusinessQuestionDTO",
+                "description": "schemas.BusinessQuestion \uacfc 1:1. id \ub294 edit \uc2dc \ube44\uc5b4\uc62c \uc218 \uc788\uc5b4 Optional."
+            },
+            "HTTPValidationError": {
+                "properties": {
+                    "detail": {
+                        "items": {
+                            "$ref": "#/components/schemas/ValidationError"
+                        },
+                        "type": "array",
+                        "title": "Detail"
+                    }
+                },
+                "type": "object",
+                "title": "HTTPValidationError"
+            },
+            "InputDocDTO": {
+                "properties": {
+                    "kind": {
+                        "type": "string",
+                        "title": "Kind"
+                    },
+                    "title": {
+                        "type": "string",
+                        "title": "Title"
+                    },
+                    "content": {
+                        "type": "string",
+                        "title": "Content"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "kind",
+                    "title",
+                    "content"
+                ],
+                "title": "InputDocDTO"
+            },
+            "PackInputDTO": {
+                "properties": {
+                    "industry": {
+                        "type": "string",
+                        "minLength": 1,
+                        "title": "Industry",
+                        "default": "distribution"
+                    },
+                    "documents": {
+                        "items": {
+                            "$ref": "#/components/schemas/InputDocDTO"
+                        },
+                        "type": "array",
+                        "title": "Documents"
+                    },
+                    "problem": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Problem"
+                    },
+                    "max_attempts": {
+                        "type": "integer",
+                        "maximum": 5.0,
+                        "minimum": 1.0,
+                        "title": "Max Attempts",
+                        "default": 3
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "title": "PackInputDTO",
+                "description": "schemas.PackInput \uacfc 1:1. industry\ub294 MVP \uace0\uc815\uac12 \uc678\uc5d0\ub3c4 \ud5c8\uc6a9\ud574 \uc6b4\uc601 \ud655\uc7a5 \uc5ec\uc9c0."
+            },
+            "ResumeDecisionDTO": {
+                "properties": {
+                    "action": {
+                        "type": "string",
+                        "enum": [
+                            "approve",
+                            "edit",
+                            "regenerate"
+                        ],
+                        "title": "Action"
+                    },
+                    "edited_items": {
+                        "anyOf": [
+                            {
+                                "items": {
+                                    "$ref": "#/components/schemas/BusinessQuestionDTO"
+                                },
+                                "type": "array"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Edited Items"
+                    },
+                    "feedback": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Feedback"
+                    }
+                },
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                    "action"
+                ],
+                "title": "ResumeDecisionDTO",
+                "description": "schemas.ResumeDecision \uacfc 1:1. action\ubcc4 \ud544\uc218 \ud544\ub4dc\ub97c 422 \ub85c \uac15\uc81c\ud55c\ub2e4."
+            },
+            "RunResponse": {
+                "properties": {
+                    "run_id": {
+                        "type": "string",
+                        "title": "Run Id"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "interrupted",
+                            "done"
+                        ],
+                        "title": "Status"
+                    },
+                    "stage": {
+                        "anyOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Stage"
+                    },
+                    "payload": {
+                        "anyOf": [
+                            {
+                                "additionalProperties": true,
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Payload"
+                    },
+                    "pack": {
+                        "anyOf": [
+                            {
+                                "additionalProperties": true,
+                                "type": "object"
+                            },
+                            {
+                                "type": "null"
+                            }
+                        ],
+                        "title": "Pack"
+                    }
+                },
+                "additionalProperties": true,
+                "type": "object",
+                "required": [
+                    "run_id",
+                    "status"
+                ],
+                "title": "RunResponse",
+                "description": "W(BFF/\ud504\ub860\ud2b8) \uc640 \ud569\uc758\ub41c \uc751\ub2f5 \uad6c\uc870.\n\n- \uc77c\uc2dc\uc815\uc9c0:  {run_id, status:\"interrupted\", stage, payload}\n- \uc644\ub8cc:      {run_id, status:\"done\", pack}"
+            },
+            "ValidationError": {
+                "properties": {
+                    "loc": {
+                        "items": {
+                            "anyOf": [
+                                {
+                                    "type": "string"
+                                },
+                                {
+                                    "type": "integer"
+                                }
+                            ]
+                        },
+                        "type": "array",
+                        "title": "Location"
+                    },
+                    "msg": {
+                        "type": "string",
+                        "title": "Message"
+                    },
+                    "type": {
+                        "type": "string",
+                        "title": "Error Type"
+                    },
+                    "input": {
+                        "title": "Input"
+                    },
+                    "ctx": {
+                        "type": "object",
+                        "title": "Context"
+                    }
+                },
+                "type": "object",
+                "required": [
+                    "loc",
+                    "msg",
+                    "type"
+                ],
+                "title": "ValidationError"
+            }
+        }
+    }
+}
