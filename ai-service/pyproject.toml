@@ -16,3 +16,14 @@ dependencies = [
 [tool.uv]
 # 애플리케이션이므로 패키지로 빌드/설치하지 않고 환경+의존성만 관리한다.
 package = false
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.0",
+]
+
+[tool.pytest.ini_options]
+# ai-service 루트를 import 경로에 추가 → `import schemas/llm/fixtures/nodes...`
+pythonpath = ["."]
+testpaths = ["tests"]
+
