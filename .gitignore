@@ -11,6 +11,7 @@ venv/
 # Local env / secrets (Claude API key 등)
 .env
 .env.*
+!.env.example
 
 # DuckDB local files (tpch)
 *.duckdb
