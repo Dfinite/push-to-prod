@@ -38,6 +38,13 @@ from schemas import (
     ReviewState,
 )
 
+# A2 콘텐츠 노드 (merge-test 통합) — 더미 스텁을 실제 구현으로 교체.
+# intake: documents→LLM extract/verify→problem_profile / retrieve: 실 Postgres introspect+gap
+# / gen_questions: LLM+결정론 후처리. 시그니처가 stub 반환형과 1:1이라 drop-in.
+from nodes.intake import intake
+from nodes.retrieve import retrieve
+from nodes.gen_questions import gen_questions
+
 # S2/S3 노드 모듈 — fk_skeleton + LLM 토글 + validate (모두 D-11 준수, llm.py re-export 또는 inline TOOL)
 from nodes.ontology import gen_ontology
 from nodes.workflows import gen_workflows
@@ -124,31 +131,8 @@ def _assign_stable_ids(
 # ---------------------------------------------------------------------------
 
 
-def intake(state: DomainPackState) -> Dict[str, Any]:
-    return {
-        "problem_profile": _dummy_problem_profile(),
-        "problem": "성수기 납기 지연 클레임 / 특정 SKU 반복 품절",
-    }
-
-
-def retrieve(state: DomainPackState) -> Dict[str, Any]:
-    # S2 에서 A2 가 TPC-H introspect + gap 분석으로 교체.
-    return {
-        "seed": {
-            "reference": {"name": "tpch", "schema": [], "samples": {}, "profile": {}},
-            "expected": {"entities": []},
-            "gap": {"matched": [], "missing": [], "extra": []},
-            "gold_questions": [],
-        }
-    }
-
-
-def gen_questions(state: DomainPackState) -> Dict[str, Any]:
-    # S2 에서 A2 가 LLM 호출 + validate 로 교체. 지금은 canned_pack 의 q1/q2.
-    return {
-        "business_questions": _CANNED["business_questions"],
-        "review_questions": _initial_review_state(),
-    }
+# intake / retrieve / gen_questions 는 nodes/ 에서 import (위 통합 배선).
+# 더미 스텁(_dummy_problem_profile 등)은 폴백 참고용으로 남겨두되 그래프는 실 노드를 쓴다.
 
 
 def review_questions(state: DomainPackState) -> Dict[str, Any]:
