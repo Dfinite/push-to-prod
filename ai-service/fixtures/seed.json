@@ -1,0 +1,571 @@
+{
+  "reference": {
+    "name": "tpch",
+    "schema": [
+      {
+        "table": "region",
+        "columns": [
+          {
+            "name": "r_regionkey",
+            "type": "integer"
+          },
+          {
+            "name": "r_name",
+            "type": "varchar"
+          },
+          {
+            "name": "r_comment",
+            "type": "varchar"
+          }
+        ],
+        "pk": [
+          "r_regionkey"
+        ],
+        "fk": []
+      },
+      {
+        "table": "nation",
+        "columns": [
+          {
+            "name": "n_nationkey",
+            "type": "integer"
+          },
+          {
+            "name": "n_name",
+            "type": "varchar"
+          },
+          {
+            "name": "n_regionkey",
+            "type": "integer"
+          },
+          {
+            "name": "n_comment",
+            "type": "varchar"
+          }
+        ],
+        "pk": [
+          "n_nationkey"
+        ],
+        "fk": [
+          {
+            "col": "n_regionkey",
+            "ref": "region.r_regionkey"
+          }
+        ]
+      },
+      {
+        "table": "supplier",
+        "columns": [
+          {
+            "name": "s_suppkey",
+            "type": "bigint"
+          },
+          {
+            "name": "s_name",
+            "type": "varchar"
+          },
+          {
+            "name": "s_address",
+            "type": "varchar"
+          },
+          {
+            "name": "s_nationkey",
+            "type": "integer"
+          },
+          {
+            "name": "s_phone",
+            "type": "varchar"
+          },
+          {
+            "name": "s_acctbal",
+            "type": "decimal(15,2)"
+          },
+          {
+            "name": "s_comment",
+            "type": "varchar"
+          }
+        ],
+        "pk": [
+          "s_suppkey"
+        ],
+        "fk": [
+          {
+            "col": "s_nationkey",
+            "ref": "nation.n_nationkey"
+          }
+        ]
+      },
+      {
+        "table": "customer",
+        "columns": [
+          {
+            "name": "c_custkey",
+            "type": "bigint"
+          },
+          {
+            "name": "c_name",
+            "type": "varchar"
+          },
+          {
+            "name": "c_address",
+            "type": "varchar"
+          },
+          {
+            "name": "c_nationkey",
+            "type": "integer"
+          },
+          {
+            "name": "c_phone",
+            "type": "varchar"
+          },
+          {
+            "name": "c_acctbal",
+            "type": "decimal(15,2)"
+          },
+          {
+            "name": "c_mktsegment",
+            "type": "varchar"
+          },
+          {
+            "name": "c_comment",
+            "type": "varchar"
+          }
+        ],
+        "pk": [
+          "c_custkey"
+        ],
+        "fk": [
+          {
+            "col": "c_nationkey",
+            "ref": "nation.n_nationkey"
+          }
+        ]
+      },
+      {
+        "table": "part",
+        "columns": [
+          {
+            "name": "p_partkey",
+            "type": "bigint"
+          },
+          {
+            "name": "p_name",
+            "type": "varchar"
+          },
+          {
+            "name": "p_mfgr",
+            "type": "varchar"
+          },
+          {
+            "name": "p_brand",
+            "type": "varchar"
+          },
+          {
+            "name": "p_type",
+            "type": "varchar"
+          },
+          {
+            "name": "p_size",
+            "type": "integer"
+          },
+          {
+            "name": "p_container",
+            "type": "varchar"
+          },
+          {
+            "name": "p_retailprice",
+            "type": "decimal(15,2)"
+          },
+          {
+            "name": "p_comment",
+            "type": "varchar"
+          }
+        ],
+        "pk": [
+          "p_partkey"
+        ],
+        "fk": []
+      },
+      {
+        "table": "partsupp",
+        "columns": [
+          {
+            "name": "ps_partkey",
+            "type": "bigint"
+          },
+          {
+            "name": "ps_suppkey",
+            "type": "bigint"
+          },
+          {
+            "name": "ps_availqty",
+            "type": "bigint"
+          },
+          {
+            "name": "ps_supplycost",
+            "type": "decimal(15,2)"
+          },
+          {
+            "name": "ps_comment",
+            "type": "varchar"
+          }
+        ],
+        "pk": [
+          "ps_partkey",
+          "ps_suppkey"
+        ],
+        "fk": [
+          {
+            "col": "ps_partkey",
+            "ref": "part.p_partkey"
+          },
+          {
+            "col": "ps_suppkey",
+            "ref": "supplier.s_suppkey"
+          }
+        ]
+      },
+      {
+        "table": "orders",
+        "columns": [
+          {
+            "name": "o_orderkey",
+            "type": "bigint"
+          },
+          {
+            "name": "o_custkey",
+            "type": "bigint"
+          },
+          {
+            "name": "o_orderstatus",
+            "type": "varchar"
+          },
+          {
+            "name": "o_totalprice",
+            "type": "decimal(15,2)"
+          },
+          {
+            "name": "o_orderdate",
+            "type": "date"
+          },
+          {
+            "name": "o_orderpriority",
+            "type": "varchar"
+          },
+          {
+            "name": "o_clerk",
+            "type": "varchar"
+          },
+          {
+            "name": "o_shippriority",
+            "type": "integer"
+          },
+          {
+            "name": "o_comment",
+            "type": "varchar"
+          }
+        ],
+        "pk": [
+          "o_orderkey"
+        ],
+        "fk": [
+          {
+            "col": "o_custkey",
+            "ref": "customer.c_custkey"
+          }
+        ]
+      },
+      {
+        "table": "lineitem",
+        "columns": [
+          {
+            "name": "l_orderkey",
+            "type": "bigint"
+          },
+          {
+            "name": "l_partkey",
+            "type": "bigint"
+          },
+          {
+            "name": "l_suppkey",
+            "type": "bigint"
+          },
+          {
+            "name": "l_linenumber",
+            "type": "bigint"
+          },
+          {
+            "name": "l_quantity",
+            "type": "decimal(15,2)"
+          },
+          {
+            "name": "l_extendedprice",
+            "type": "decimal(15,2)"
+          },
+          {
+            "name": "l_discount",
+            "type": "decimal(15,2)"
+          },
+          {
+            "name": "l_tax",
+            "type": "decimal(15,2)"
+          },
+          {
+            "name": "l_returnflag",
+            "type": "varchar"
+          },
+          {
+            "name": "l_linestatus",
+            "type": "varchar"
+          },
+          {
+            "name": "l_shipdate",
+            "type": "date"
+          },
+          {
+            "name": "l_commitdate",
+            "type": "date"
+          },
+          {
+            "name": "l_receiptdate",
+            "type": "date"
+          },
+          {
+            "name": "l_shipinstruct",
+            "type": "varchar"
+          },
+          {
+            "name": "l_shipmode",
+            "type": "varchar"
+          },
+          {
+            "name": "l_comment",
+            "type": "varchar"
+          }
+        ],
+        "pk": [
+          "l_orderkey",
+          "l_linenumber"
+        ],
+        "fk": [
+          {
+            "col": "l_orderkey",
+            "ref": "orders.o_orderkey"
+          },
+          {
+            "col": "l_partkey",
+            "ref": "part.p_partkey"
+          },
+          {
+            "col": "l_suppkey",
+            "ref": "supplier.s_suppkey"
+          }
+        ]
+      }
+    ],
+    "samples": {
+      "orders": [
+        {
+          "o_orderkey": 1,
+          "o_custkey": 370,
+          "o_orderstatus": "O",
+          "o_totalprice": 172799.49,
+          "o_orderdate": "1996-01-02",
+          "o_orderpriority": "5-LOW",
+          "o_clerk": "Clerk#000000951",
+          "o_shippriority": 0,
+          "o_comment": "ly express platelets. deposits acc"
+        },
+        {
+          "o_orderkey": 2,
+          "o_custkey": 781,
+          "o_orderstatus": "O",
+          "o_totalprice": 38426.09,
+          "o_orderdate": "1996-12-01",
+          "o_orderpriority": "1-URGENT",
+          "o_clerk": "Clerk#000000880",
+          "o_shippriority": 0,
+          "o_comment": "ve the furiously fluffy dependencies. carefully regular "
+        }
+      ],
+      "lineitem": [
+        {
+          "l_orderkey": 1,
+          "l_partkey": 1552,
+          "l_suppkey": 93,
+          "l_linenumber": 1,
+          "l_quantity": 17.0,
+          "l_extendedprice": 24710.35,
+          "l_discount": 0.04,
+          "l_tax": 0.02,
+          "l_returnflag": "N",
+          "l_linestatus": "O",
+          "l_shipdate": "1996-03-13",
+          "l_commitdate": "1996-02-12",
+          "l_receiptdate": "1996-03-22",
+          "l_shipinstruct": "DELIVER IN PERSON",
+          "l_shipmode": "TRUCK",
+          "l_comment": "to beans x-ray carefull"
+        },
+        {
+          "l_orderkey": 1,
+          "l_partkey": 674,
+          "l_suppkey": 75,
+          "l_linenumber": 2,
+          "l_quantity": 36.0,
+          "l_extendedprice": 56688.12,
+          "l_discount": 0.09,
+          "l_tax": 0.06,
+          "l_returnflag": "N",
+          "l_linestatus": "O",
+          "l_shipdate": "1996-04-12",
+          "l_commitdate": "1996-02-28",
+          "l_receiptdate": "1996-04-20",
+          "l_shipinstruct": "TAKE BACK RETURN",
+          "l_shipmode": "MAIL",
+          "l_comment": " according to the final foxes. qui"
+        }
+      ],
+      "supplier": [
+        {
+          "s_suppkey": 1,
+          "s_name": "Supplier#000000001",
+          "s_address": "sdrGnXCDRcfriBvY0KL,ipCanOTyK t NN1",
+          "s_nationkey": 17,
+          "s_phone": "27-918-335-1736",
+          "s_acctbal": 5755.94,
+          "s_comment": " instructions. slyly unusual"
+        },
+        {
+          "s_suppkey": 2,
+          "s_name": "Supplier#000000002",
+          "s_address": "TRMhVHz3XiFuhapxucPo1",
+          "s_nationkey": 5,
+          "s_phone": "15-679-861-2259",
+          "s_acctbal": 4032.68,
+          "s_comment": " the pending packages. furiously expres"
+        }
+      ],
+      "partsupp": [
+        {
+          "ps_partkey": 1,
+          "ps_suppkey": 2,
+          "ps_availqty": 3325,
+          "ps_supplycost": 771.64,
+          "ps_comment": "blithely regular theodolites sleep slyly across the sometimes bold dependencies. even accounts among the slyly final sauternes cajole quickly about the doggedly even platelets. carefully final"
+        },
+        {
+          "ps_partkey": 1,
+          "ps_suppkey": 27,
+          "ps_availqty": 8076,
+          "ps_supplycost": 993.49,
+          "ps_comment": "ts boost carefully ironic, regular accounts. final theodolites cajole slyly. final"
+        }
+      ],
+      "customer": [
+        {
+          "c_custkey": 1,
+          "c_name": "Customer#000000001",
+          "c_address": "j5JsirBM9PsCy0O1m",
+          "c_nationkey": 15,
+          "c_phone": "25-989-741-2988",
+          "c_acctbal": 711.56,
+          "c_mktsegment": "BUILDING",
+          "c_comment": "y final requests wake slyly quickly special accounts. blithely"
+        },
+        {
+          "c_custkey": 2,
+          "c_name": "Customer#000000002",
+          "c_address": "487LW1dovn6Q4dMVymKwwLE9OKf3QG",
+          "c_nationkey": 13,
+          "c_phone": "23-768-687-3665",
+          "c_acctbal": 121.65,
+          "c_mktsegment": "AUTOMOBILE",
+          "c_comment": "y carefully regular foxes. slyly regular requests about the bli"
+        }
+      ]
+    },
+    "profile": {
+      "lineitem": {
+        "rows": 60175,
+        "l_shipdate": {
+          "min": "1992-01-04",
+          "max": "1998-11-29"
+        },
+        "l_commitdate": {
+          "min": "1992-02-02",
+          "max": "1998-10-28"
+        }
+      },
+      "orders": {
+        "rows": 15000,
+        "o_orderdate": {
+          "min": "1992-01-01",
+          "max": "1998-08-02"
+        }
+      },
+      "supplier": {
+        "rows": 100
+      },
+      "partsupp": {
+        "rows": 8000
+      }
+    }
+  },
+  "expected": {
+    "entities": [
+      {
+        "name": "출하",
+        "needed_fields": [
+          "약속납기",
+          "실제출하일"
+        ],
+        "from": [
+          "ABC상사 미팅 메모"
+        ]
+      },
+      {
+        "name": "공급사",
+        "needed_fields": [
+          "리드타임",
+          "공급사ID"
+        ],
+        "from": [
+          "물류팀 회신"
+        ]
+      }
+    ]
+  },
+  "gap": {
+    "matched": [
+      {
+        "expected": "출하",
+        "reference": "lineitem",
+        "via": [
+          "l_commitdate",
+          "l_shipdate"
+        ]
+      }
+    ],
+    "missing": [
+      {
+        "expected": "공급사 리드타임",
+        "note": "TPC-H엔 supplier는 있으나 리드타임 컬럼 없음 → 별도 소스 필요"
+      }
+    ],
+    "extra": [
+      "region",
+      "nation"
+    ]
+  },
+  "gold_questions": [
+    "배송 우선순위가 높은(약속 납기 임박) 상위 주문은?",
+    "수익 기여가 큰 상위 공급사는?",
+    "약속 납기 대비 실제 출하가 지연된 라인의 비중은?",
+    "지역(nation)별 매출 상위 고객은?",
+    "부품-공급사 조합 중 공급 가능 수량이 낮은 항목은?",
+    "월별 출하량 추세는 어떻게 변하는가?",
+    "주문 우선순위(o_orderpriority)별 평균 처리 리드타임은?",
+    "반품/할인(l_discount)이 큰 품목의 마진 영향은?"
+  ]
+}
