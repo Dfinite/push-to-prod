@@ -1,0 +1,22 @@
+{
+  "problem_profile": {
+    "goals": [
+      {"text": "납기 준수율 95% 달성", "sources": ["유통 운영 BRD v1.2"]}
+    ],
+    "pain_points": [
+      {"text": "성수기 납기 지연 클레임", "sources": ["ABC상사 미팅 메모"]},
+      {"text": "특정 SKU 반복 품절", "sources": ["물류팀 회신"]},
+      {"text": "공급사 리드타임 변동 큼", "sources": ["물류팀 회신"]}
+    ],
+    "kpis": [
+      {"text": "납기 준수율", "sources": ["유통 운영 BRD v1.2"]},
+      {"text": "부진재고 비중", "sources": ["유통 운영 BRD v1.2"]}
+    ],
+    "constraints": [
+      {"text": "PoC 8주 · 거래처 20곳", "sources": ["유통 운영 BRD v1.2"]}
+    ],
+    "systems": ["ERP", "WMS"],
+    "stakeholders": ["물류팀", "영업"]
+  },
+  "problem": "성수기 납기 지연 클레임 / 특정 SKU 반복 품절"
+}

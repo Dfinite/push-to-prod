@@ -1,0 +1,21 @@
+{
+  "industry": "distribution",
+  "documents": [
+    {
+      "kind": "brd",
+      "title": "유통 운영 BRD v1.2",
+      "content": "목표: 납기 준수율 95% 달성. 핵심 KPI는 납기 준수율과 부진재고 비중. 제약: PoC 8주 · 거래처 20곳. 관련 시스템 ERP, WMS. 영업·물류 부서 협업 필요."
+    },
+    {
+      "kind": "sales_note",
+      "title": "ABC상사 미팅 메모",
+      "content": "성수기 납기 지연 클레임 반복. 약속 납기 대비 실제 출하가 며칠씩 밀린다는 불만. 출하 일정 가시성 필요."
+    },
+    {
+      "kind": "email",
+      "title": "물류팀 회신",
+      "content": "특정 SKU 반복 품절 발생. 공급사 리드타임 변동이 커서 발주 타이밍을 잡기 어렵다. 공급사별 리드타임 추적이 필요함."
+    }
+  ],
+  "problem": null
+}
