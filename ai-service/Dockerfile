@@ -1,6 +1,8 @@
 # Domain Pack Builder — ai-service (FastAPI + LangGraph)
-# 서버 시스템 파이썬은 3.10 이라 requires-python>=3.13 을 못 맞춤 → 컨테이너로 3.13 고정.
-FROM python:3.13-slim
+# 서버 시스템 파이썬은 3.10 이라 컨테이너로 격리. python:3.13 은 Docker Hub 익명 pull
+# rate limit(429) 에 걸려, 서버에 이미 캐시된 python:3.11 을 베이스로 쓴다.
+# 코드에 3.12+ 전용 문법(PEP695 등) 없음 → 3.11 에서 동작 확인됨.
+FROM python:3.11
 
 WORKDIR /app
 

@@ -1,6 +1,8 @@
 fastapi>=0.110,<0.116
 uvicorn[standard]>=0.27,<0.31
-langgraph>=0.2.40,<0.3
+# 1.2.x 로 핀: 구버전(0.2.x)은 노드명이 state 키와 겹치면 거부(review_questions 등)해
+# 그래프 빌드가 깨진다. A2 가 검증한 버전(1.2.5)에 맞춘다.
+langgraph>=1.2,<2
 pydantic>=2.7,<3
 anthropic>=0.30,<2.0
 python-dotenv>=1.0,<2
