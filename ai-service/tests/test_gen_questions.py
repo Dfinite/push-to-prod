@@ -292,3 +292,73 @@ def test_ids_assigned_last(reference_columns):
     ids = [q["id"] for q in bqs]
     assert ids == [f"q{i}" for i in range(1, len(bqs) + 1)]
     assert len(set(ids)) == len(ids)
+
+
+# ---------------------------------------------------------------------------
+# foodco (demo_foodco_stock) 시나리오 — 실DB introspect 픽스처에 대한 오프라인 회귀
+# ---------------------------------------------------------------------------
+
+
+def _foodco_questions():
+    """foodco 실컬럼·category 4종 (id 없음) — 도메인 비종속 동작 확인용."""
+    return [
+        {
+            "question": "유통기한 임박 폐기 위험 자재는?",
+            "category": "재고 건전성",
+            "rationale": "폐기 손실",
+            "linked_sources": ["inv_snapshot_fact.expiry_date", "inv_snapshot_fact.stock_qty"],
+            "data_status": "available",
+        },
+        {
+            "question": "소진 예상일이 짧아 품절 위험인 자재는?",
+            "category": "납기·리드타임",
+            "rationale": "품절 방지",
+            "linked_sources": ["pred_forecast_daily.est_deplete_days"],
+            "data_status": "available",
+        },
+        {
+            "question": "폐기 리스크 등급이 높은 자재는?",
+            "category": "공급·공급사 리스크",
+            "rationale": "리스크 관리",
+            "linked_sources": ["pred_risk_daily.risk_level", "pred_risk_daily.remaining_days"],
+            "data_status": "available",
+        },
+        {
+            "question": "체인(고객)별 출하 집중도가 큰 자재는?",
+            "category": "고객·주문",
+            "rationale": "거래처 분석",
+            "linked_sources": ["agg_by_chain_daily.sales_customer_code", "agg_by_chain_daily.total_shipped_qty"],
+            "data_status": "available",
+        },
+        {
+            "question": "재배치 권고 수량이 큰 플랜트 조합은?",
+            "category": "재고 건전성",
+            "rationale": "재고 재배치",
+            "linked_sources": ["pred_relocation_suggest.suggest_qty"],
+            "data_status": "available",
+        },
+    ]
+
+
+def test_foodco_fixture_offline(monkeypatch):
+    """노드가 foodco 실DB introspect 픽스처에서도 계약대로 동작(네트워크 0)."""
+    import fixtures as fx
+
+    seed = fx.load_seed_foodco()
+    profile = fx.load_problem_profile_foodco()
+    ref_cols = gq._reference_columns(seed)
+
+    _patch_call_tool(monkeypatch, [{"questions": _foodco_questions()}])
+    out = gq.gen_questions({"problem_profile": profile, "seed": seed})
+
+    bqs = out["business_questions"]
+    bq_keys = set(schemas.BusinessQuestion.__annotations__)
+    assert 5 <= len(bqs) <= 8
+    assert [q["id"] for q in bqs] == [f"q{i}" for i in range(1, len(bqs) + 1)]
+    assert len({q["category"] for q in bqs}) >= 3
+    for q in bqs:
+        assert set(q) == bq_keys
+        assert q["category"] in schemas.COVERAGE_AREAS
+        for src in q["linked_sources"]:
+            assert src in ref_cols  # foodco 실컬럼만
+    assert out["review_questions"] == {"status": "pending", "feedback": [], "attempts": 0}

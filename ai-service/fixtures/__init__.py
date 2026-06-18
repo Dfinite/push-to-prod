@@ -46,3 +46,19 @@ def load_seed() -> Dict[str, Any]:
 def load_business_questions() -> List[Dict[str, Any]]:
     """list[BusinessQuestion] — S3 golden 출력 / (A1) gen_ontology 입력."""
     return _load("business_questions.json")["business_questions"]
+
+
+# ---------------------------------------------------------------------------
+# foodco (demo_foodco_stock) 시나리오 — 실 Postgres introspect 기반.
+# 식품사 재고/유통기한 도메인. tpch(distribution) 픽스처와 병존(추가 전용).
+# ---------------------------------------------------------------------------
+
+
+def load_seed_foodco() -> Dict[str, Any]:
+    """Seed — demo_foodco_stock 실DB introspect(비즈니스 14테이블) + 합성 gap/gold."""
+    return _load("seed_foodco.json")
+
+
+def load_problem_profile_foodco() -> Dict[str, Any]:
+    """ProblemProfile — foodco 재고/유통기한 도메인 (S3 입력)."""
+    return _load("problem_profile_foodco.json")["problem_profile"]
